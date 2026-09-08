@@ -24,7 +24,6 @@ function getDefaultConfig() {
       user: 'user',
       host: 'hostname'
     },
-    ascii_art: '',
     theme: {
       accent_color: '#38bdf8'
     }
@@ -39,12 +38,6 @@ function applyConfig() {
     document.title = siteConfig.site.title;
     const terminalTitle = document.querySelector('.terminal-title');
     if (terminalTitle) terminalTitle.textContent = siteConfig.site.title;
-  }
-
-  // ASCII art guncelle
-  const asciiArtEl = document.querySelector('.ascii-art');
-  if (asciiArtEl && siteConfig.ascii_art) {
-    asciiArtEl.textContent = siteConfig.ascii_art;
   }
 
   // User/Host guncelle
