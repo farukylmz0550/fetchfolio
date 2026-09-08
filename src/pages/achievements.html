@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>farukylmz@thinkpad:~/basarilar</title>
+  <title>user@hostname:~/basarilar</title>
   <link rel="icon" type="image/x-icon" href="../../favicon.ico">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -178,7 +178,7 @@
       <div class="terminal-dot dot-red"></div>
       <div class="terminal-dot dot-yellow"></div>
       <div class="terminal-dot dot-green"></div>
-      <span class="terminal-title">farukylmz@thinkpad:~/basarilar</span>
+      <span class="terminal-title">user@hostname:~/basarilar</span>
       <button class="lang-btn" onclick="toggleLang()">TR</button>
     </div>
     <div class="terminal-body">
@@ -198,14 +198,14 @@
       const newLang = getLang() === 'tr' ? 'en' : 'tr';
       setLang(newLang);
       document.querySelector('.lang-btn').textContent = newLang.toUpperCase();
-      document.title = 'farukylmz@thinkpad:' + t('titles.achievements');
-      document.querySelector('.terminal-title').textContent = 'farukylmz@thinkpad:' + t('titles.achievements');
+      document.title = 'user@hostname:' + t('titles.achievements');
+      document.querySelector('.terminal-title').textContent = 'user@hostname:' + t('titles.achievements');
       document.querySelector('.cmd').textContent = t('pages.achievements');
       loadMarkdown('../../content/achievements.md');
     }
 
     document.querySelector('.lang-btn').textContent = getLang().toUpperCase();
-    document.title = 'farukylmz@thinkpad:' + t('titles.achievements');
+    document.title = 'user@hostname:' + t('titles.achievements');
   </script>
 </body>
 </html>

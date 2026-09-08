@@ -2,18 +2,18 @@
 
 ## İş Deneyimi
 
-- Henüz profesyonel iş deneyimim bulunmuyor.
+- [is deneyiminiz]
 
 ## Teknik Yetenekler
 
-**İşletim Sistemleri** : Fedora Linux, Arch Linux, Debian, Ubuntu
+**İşletim Sistemleri** : [os listesi]
 
-**Araçlar & Teknolojiler** : Podman, Docker, Nginx, Git, Vim, Zsh, Tiling Window Manager
+**Araçlar & Teknolojiler** : [araclar]
 
-**Programlama Dilleri** : Python, JavaScript, Bash
+**Programlama Dilleri** : [diller]
 
-**Diğer** : 3D baskı/tasarım (Fusion 360, Tinkercad), sistem yönetimi, otomasyon, self-hosted servis kurulumu
+**Diğer** : [diger yetenekler]
 
 ## Sertifikalar
 
-Henüz sertifikam bulunmuyor.
+- [sertifika 1]

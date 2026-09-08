@@ -20,11 +20,11 @@ async function loadConfig() {
 function getDefaultConfig() {
   return {
     site: {
-      title: 'farukylmz@thinkpad:~/',
-      user: 'farukylmz',
-      host: 'thinkpad'
+      title: 'user@hostname:~/',
+      user: 'user',
+      host: 'hostname'
     },
-    ascii_art: 'ASCII ART BULUNAMADI',
+    ascii_art: '',
     theme: {
       accent_color: '#38bdf8'
     }
@@ -51,8 +51,8 @@ function applyConfig() {
   if (siteConfig.site) {
     const userHostEls = document.querySelectorAll('.user-host');
     if (userHostEls.length >= 2) {
-      userHostEls[0].textContent = siteConfig.site.user || 'farukylmz';
-      userHostEls[1].textContent = siteConfig.site.host || 'thinkpad';
+      userHostEls[0].textContent = siteConfig.site.user || 'user';
+      userHostEls[1].textContent = siteConfig.site.host || 'hostname';
     }
   }
 

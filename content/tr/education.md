@@ -2,14 +2,13 @@
 
 ## Üniversite
 
-Henüz üniversite eğitimime başlamadım / devam ediyorum.
+[üniversite bilginiz]
 
 ## Online Kurslar & Sertifikalar
 
-- Ubuntu & Linux Temelleri - Udemy
-- Python ile Programlama - YouTube / Docs
-- Git & GitHub Kullanımı - Various Sources
+- [kurs adi - platform]
+- [kurs adi - platform]
 
 ## Kendi Kendine Geliştirme
 
-Yazılım, Linux sistemler ve CAD/3D tasarım alanlarındaki pratik çalışmalarımı kendi başıma yürütüyorum. Fedora Linux üzerinde günlük geliştirme yapıyorum. Vim, Zsh ve tiling window manager araçlarını aktif olarak kullanıyorum.
+[oz gelistirme aciklamaniz]

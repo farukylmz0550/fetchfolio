@@ -2,18 +2,18 @@
 
 ## Work Experience
 
-- No professional work experience yet.
+- [your work experience]
 
 ## Technical Skills
 
-**Operating Systems** : Fedora Linux, Arch Linux, Debian, Ubuntu
+**Operating Systems** : [os list]
 
-**Tools & Technologies** : Podman, Docker, Nginx, Git, Vim, Zsh, Tiling Window Manager
+**Tools & Technologies** : [tools]
 
-**Programming Languages** : Python, JavaScript, Bash
+**Programming Languages** : [languages]
 
-**Other** : 3D printing/design (Fusion 360, Tinkercad), system administration, automation, self-hosted service setup
+**Other** : [other skills]
 
 ## Certificates
 
-No certificates yet.
+- [certificate 1]

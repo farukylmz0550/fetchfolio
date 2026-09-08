@@ -2,9 +2,9 @@
 # Bu dosyayi duzenleyerek siteyi ozellestirebilirsiniz.
 
 site:
-  title: "farukylmz@thinkpad:~/"
-  user: "farukylmz"
-  host: "thinkpad"
+  title: "user@host:~/"
+  user: "fetch"
+  host: "folio"
 
 ascii_art: |
   =-%%%%%%%%%%%%%%%%%%%%%%%%%==                         
