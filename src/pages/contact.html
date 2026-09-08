@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>farukylmz@thinkpad:~/iletisim</title>
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      height: 100%;
+    }
+    body {
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #0c0c0d;
+      color: #e6e6e6;
+      font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Courier New", monospace;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 15% 30%, rgba(56, 189, 248, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 85% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 20%, rgba(250, 204, 21, 0.06) 0%, transparent 35%),
+        radial-gradient(ellipse at 30% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 35%);
+      animation: wave 12s ease-in-out infinite;
+      z-index: -1;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
+      animation: pulse 8s ease-in-out infinite reverse;
+      z-index: -1;
+    }
+    @keyframes wave {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(4%, -3%) scale(1.03); }
+      50% { transform: translate(-3%, 4%) scale(0.97); }
+      75% { transform: translate(3%, 1%) scale(1.02); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+    @keyframes pulse {
+      0% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0.5; transform: scale(1); }
+    }
+    .terminal-window {
+      width: 800px;
+      height: 500px;
+      background: rgba(18, 19, 22, 0.92);
+      border: 1px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .terminal-bar {
+      background: #1e293b;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+    .terminal-title {
+      color: #64748b;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    .terminal-body {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.8;
+      overflow-y: scroll;
+      flex: 1;
+    }
+    .terminal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .terminal-body::-webkit-scrollbar-track {
+      background: #0c0c0d;
+    }
+    .terminal-body::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+    .terminal-body::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+    .prompt {
+      color: #22c55e;
+      font-weight: bold;
+    }
+    .cmd {
+      color: #e2e8f0;
+    }
+    #content {
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+      color: #facc15;
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #38bdf8;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .lang-btn {
+      margin-left: auto;
+      background: transparent;
+      color: #64748b;
+      border: 1px solid #333;
+      border-radius: 3px;
+      padding: 2px 8px;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    @media (max-width: 900px) {
+      .terminal-window { width: 100%; height: auto; min-height: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <div class="terminal-dot dot-red"></div>
+      <div class="terminal-dot dot-yellow"></div>
+      <div class="terminal-dot dot-green"></div>
+      <span class="terminal-title">farukylmz@thinkpad:~/iletisim</span>
+      <button class="lang-btn" onclick="toggleLang()">TR</button>
+    </div>
+    <div class="terminal-body">
+      <div><span class="prompt">$</span> <span class="cmd">cat iletisim.md</span><span class="cursor"></span></div>
+      <div id="content"></div>
+      <a href="../../index.html" class="back-link">&lt; cd ~</a>
+    </div>
+  </div>
+
+  <script src="../../src/js/marked.min.js"></script>
+  <script src="../../src/js/i18n.js"></script>
+  <script src="../../src/js/load-md.js"></script>
+  <script>
+    loadMarkdown('../../content/contact.md');
+
+    function toggleLang() {
+      const newLang = getLang() === 'tr' ? 'en' : 'tr';
+      setLang(newLang);
+      document.querySelector('.lang-btn').textContent = newLang.toUpperCase();
+      document.title = 'farukylmz@thinkpad:' + t('titles.contact');
+      document.querySelector('.terminal-title').textContent = 'farukylmz@thinkpad:' + t('titles.contact');
+      document.querySelector('.cmd').textContent = t('pages.contact');
+      loadMarkdown('../../content/contact.md');
+    }
+
+    document.querySelector('.lang-btn').textContent = getLang().toUpperCase();
+    document.title = 'farukylmz@thinkpad:' + t('titles.contact');
+  </script>
+</body>
+</html>
