@@ -2,6 +2,10 @@
 
 Kişisel portfolyo web sitesi. Terminal temalı, TR/EN dil destekli.
 
+
+
+<img width="1920" height="962" alt="Screenshot From 2026-09-09 12-32-44" src="https://github.com/user-attachments/assets/b7811ce4-c817-4bc5-add6-80221a14b9af" />
+
 ## Özellikler
 
 - Terminal simülasyonu arayüzü
