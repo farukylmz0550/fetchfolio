@@ -6,4 +6,8 @@ services:
     image: ghcr.io/farukylmz0550/fetchfolio:latest
     ports:
       - "3000:80"
+    volumes:
+      # Live editing: klasördeki değişiklikler anında 3000'de görünür
+      # (Dockerfile COPY'sini shadow eder, rebuild gerekmez)
+      - .:/usr/share/nginx/html:ro,z
     restart: unless-stopped
