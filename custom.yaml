@@ -3,9 +3,9 @@
 
 site:
   version: "1.0.0"
-  title: "user@host:~/"
-  user: "fetch"
-  host: "folio"
+  title: "faruk@ylmz:~/"
+  user: "faruk"
+  host: "ylmz"
 
 theme:
   accent_color: "#38bdf8"
