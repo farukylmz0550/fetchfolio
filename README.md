@@ -55,26 +55,17 @@ okunur (`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`,
 
 ```bash
 docker compose up --build
-# → http://localhost:8080
+# → http://localhost:3000
 ```
 
 Önceden derlenmiş imaj (ghcr.io'dan):
 
 ```bash
-docker run --rm -p 8080:80 ghcr.io/farukylmz0550/fetchfolio:latest
+docker run --rm -p 3000:80 ghcr.io/farukylmz0550/fetchfolio:latest
 ```
 
 `main` branch'ine her push'ta imaj otomatik derlenir ve `ghcr.io`'ya yayınlanır.
 `v*` formatında git tag'ları (ör. `v1.0.0`) sürüm etiketli imaj üretir.
-
-## GitHub Pages
-
-`main`'e her push otomatik olarak GitHub Pages'e deploy edilir:
-**https://farukylmz0550.github.io/fetchfolio/**
-
-- Terminal temalı `404.html` sayfası GH Pages'ta eksik yollarda otomatik görünür.
-- Site alt dizinde (`/fetchfolio/`) servis edildiği için tüm yollar relative
-  tanımlıdır; ek bir konfigürasyon gerekmez.
 
 ## Sürümlendirme
 
