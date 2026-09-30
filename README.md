@@ -84,6 +84,12 @@ docker run --rm -p 8080:80 ghcr.io/farukylmz0550/fetchfolio:latest
 - `1.0.0` — ilk resmi sürüm: CSS tekilleştirme, sosyal link yapılandırması,
   erişilebilirlik iyileştirmeleri, Docker + GH Pages desteği
 
+### Geliştirici notu
+
+`assets/css/site.css` değiştirdiğinde HTML dosyalarındaki
+`site.css?v=2` sürüm parametresini de yükselt — aksi halde tarayıcılar
+eski CSS'i önbellekten kullanmaya devam eder (GH Pages + nginx cache).
+
 ## Lisans
 
 Bu proje GNU General Public License v3.0 ile lisanslanmıştır.

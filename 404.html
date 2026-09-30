@@ -14,7 +14,7 @@
       var path = location.pathname.toLowerCase();
       var base = path.indexOf('/fetchfolio/') === 0 ? '/fetchfolio/' : '/';
       window.FF_BASE = base;
-      document.write('<link rel="stylesheet" href="' + base + 'assets/css/site.css">');
+      document.write('<link rel="stylesheet" href="' + base + 'assets/css/site.css?v=2">');
       document.write('<script src="' + base + 'src/js/js-yaml.min.js"><\/script>');
       document.write('<script src="' + base + 'src/js/config.js"><\/script>');
     })();
