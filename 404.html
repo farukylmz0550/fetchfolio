@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>user@hostname:~/404</title>
+  <!--
+    GH Pages 404.html eksik URL'nin kendisinde servis edilir; relative
+    yollar kırılır. Bu yüzden site kökü tespit edilip yollar o kökten
+    yazılır. (Kök deployda '/', proje sayfasında '/fetchfolio/'.)
+  -->
+  <script>
+    (function () {
+      var path = location.pathname.toLowerCase();
+      var base = path.indexOf('/fetchfolio/') === 0 ? '/fetchfolio/' : '/';
+      window.FF_BASE = base;
+      document.write('<link rel="stylesheet" href="' + base + 'assets/css/site.css">');
+      document.write('<script src="' + base + 'src/js/js-yaml.min.js"><\/script>');
+      document.write('<script src="' + base + 'src/js/config.js"><\/script>');
+    })();
+  </script>
+</head>
+<body class="page">
+<a class="skip-link" href="#main">İçeriğe atla</a>
+
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <div class="terminal-dot dot-red" aria-hidden="true"></div>
+      <div class="terminal-dot dot-yellow" aria-hidden="true"></div>
+      <div class="terminal-dot dot-green" aria-hidden="true"></div>
+      <span class="terminal-title">user@hostname:~/404</span>
+    </div>
+    <div class="terminal-body" id="main">
+      <div><span class="prompt">$</span> <span class="cmd" id="cmd">cat 404.md</span><span class="cursor"></span></div>
+      <div class="ff-content" id="content">
+        <p><span style="color:#ef4444;">cat:</span> <span id="missed-path"></span>: Bu dosya ya da dizin yok. / No such file or directory.</p>
+        <a href="/" class="back-link" id="back-link">&lt; cd ~</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var base = window.FF_BASE || '/';
+      var path = decodeURIComponent(location.pathname);
+      var missed = document.getElementById('missed-path');
+      var cmd = document.getElementById('cmd');
+      var back = document.getElementById('back-link');
+      var title = document.querySelector('.terminal-title');
+      var docTitle = document.title;
+
+      if (path.slice(-1) === '/') path = path.slice(0, -1);
+      if (missed) missed.textContent = path;
+      if (cmd) cmd.textContent = 'cat ' + path + '.md';
+      if (back) back.href = base;
+      if (title && docTitle) {
+        // user@hostname önekini config.js'in de görebileceği şekilde bırak
+        title.textContent = docTitle;
+      }
+    })();
+  </script>
+</body>
+</html>

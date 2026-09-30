@@ -2,9 +2,21 @@
 # Bu dosyayi duzenleyerek siteyi ozellestirebilirsiniz.
 
 site:
+  version: "1.0.0"
   title: "user@host:~/"
   user: "fetch"
   host: "folio"
 
 theme:
   accent_color: "#38bdf8"
+
+# Sosyal medya linkleri.
+# URL girilmeyen aglarin kutusu ana sayfada gizlenir.
+# Kutular: github, youtube, makerworld, huggingface, gravatar, discord
+social:
+  github: "https://github.com/farukylmz0550"
+  youtube: ""
+  makerworld: ""
+  huggingface: ""
+  gravatar: ""
+  discord: ""

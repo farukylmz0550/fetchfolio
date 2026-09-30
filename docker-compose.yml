@@ -1,0 +1,9 @@
+# FetchFolio — local development / self-host için compose
+# Build: docker compose up --build   →  http://localhost:8080
+services:
+  fetchfolio:
+    build: .
+    image: ghcr.io/farukylmz0550/fetchfolio:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped
