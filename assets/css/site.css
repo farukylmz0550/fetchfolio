@@ -133,6 +133,7 @@ body.page .terminal-window { height: 500px; }
   font-size: 14px;
   line-height: 1.8;
   overflow-y: auto;
+  overflow-x: hidden; /* yatay scrollbar yok; geniş içerik sığdırılır */
   flex: 1;
 }
 body.home .terminal-body {
@@ -150,13 +151,16 @@ body.home .terminal-body {
 /* neofetch ana sayfa */
 .ascii-art {
   color: var(--ff-accent);
-  font-size: 7px;
+  /* Art 106 karakter geniş; 6.5px ile ~413px olur ve 800px pencerede
+     (padding + gap + min-width 280 için ~450px pay) rahat sığar. */
+  font-size: 6.5px;
   line-height: 1.0;
   white-space: pre;
   user-select: none;
   font-weight: bold;
   letter-spacing: 0px;
   flex-shrink: 0;
+  min-width: 0;
 }
 .fetch-info { font-size: 14px; line-height: 1.8; flex: 1; min-width: 280px; }
 .user-host { color: var(--ff-accent); font-weight: bold; }
@@ -311,7 +315,8 @@ body.home .terminal-body {
   body.page .terminal-window { min-height: 400px; }
   .terminal-body { padding: 16px; }
   body.home .terminal-body { flex-direction: column; gap: 16px; }
-  .ascii-art { font-size: 8px; }
+  /* Dar ekranda art sığsın: viewport'a göre küçült (106 kar * ~0.6em genişlik) */
+  .ascii-art { font-size: min(6.5px, 1.4vw); }
   .fetch-info { font-size: 12px; min-width: 0; width: 100%; }
   .key { min-width: 90px; }
 }
