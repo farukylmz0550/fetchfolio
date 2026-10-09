@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>user@hostname:~/basarilar</title>
+  <title>user@hostname:~/achievements</title>
   <link rel="icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../assets/css/site.css?v=2">
+  <link rel="stylesheet" href="../../assets/css/site.css?v=3">
 </head>
 <body class="page">
-<a class="skip-link" href="#main">İçeriğe atla</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
   <div class="terminal-window">
     <div class="terminal-bar">
       <div class="terminal-dot dot-red"></div>
       <div class="terminal-dot dot-yellow"></div>
       <div class="terminal-dot dot-green"></div>
-      <span class="terminal-title">user@hostname:~/basarilar</span>
-      <button class="lang-btn" onclick="toggleLang()" aria-label="Dili değiştir">TR</button>
+      <span class="terminal-title">user@hostname:~/achievements</span>
     </div>
     <div class="terminal-body" id="main">
-      <div><span class="prompt">$</span> <span class="cmd">cat basarilar.md</span><span class="cursor"></span></div>
+      <div><span class="prompt">$</span> <span class="cmd">cat achievements.md</span><span class="cursor"></span></div>
       <div id="content"></div>
       <a href="../../index.html" class="back-link">&lt; cd ~</a>
     </div>
@@ -28,24 +27,7 @@
   <script src="../../src/js/js-yaml.min.js"></script>
   <script src="../../src/js/config.js"></script>
   <script src="../../src/js/marked.min.js"></script>
-  <script src="../../src/js/i18n.js"></script>
   <script src="../../src/js/load-md.js"></script>
-  <script>
-    loadMarkdown('../../content/achievements.md');
-
-    function toggleLang() {
-      const newLang = getLang() === 'tr' ? 'en' : 'tr';
-      setLang(newLang);
-      document.querySelector('.lang-btn').textContent = newLang.toUpperCase();
-      document.title = getUserHostPrefix() + ':' + t('titles.achievements');
-      document.querySelector('.terminal-title').textContent = getUserHostPrefix() + ':' + t('titles.achievements');
-      document.querySelector('.cmd').textContent = t('pages.achievements');
-      loadMarkdown('../../content/achievements.md');
-    }
-
-    document.querySelector('.lang-btn').textContent = getLang().toUpperCase();
-    document.querySelector('.cmd').textContent = t('pages.achievements');
-    document.title = getUserHostPrefix() + ':' + t('titles.achievements');
-  </script>
+  <script>loadMarkdown('../../content/achievements.md');</script>
 </body>
 </html>

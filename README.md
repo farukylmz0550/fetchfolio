@@ -1,43 +1,41 @@
 # fetchfolio
 
-Kişisel portfolyo web sitesi. Terminal temalı, TR/EN dil destekli.
+A personal portfolio website. Terminal-themed, neofetch-style single-language (English).
 
 <img width="1920" height="962" alt="Screenshot From 2026-09-09 12-32-44" src="https://github.com/user-attachments/assets/b7811ce4-c817-4bc5-add6-80221a14b9af" />
 
-## Özellikler
+## Features
 
-- Terminal simülasyonu arayüzü (neofetch tarzı)
-- ASCII art logo (`custom.yaml`'dan değiştirilebilir)
-- TR/EN dil desteği
-- Responsive tasarım
-- `custom.yaml` ile kolay özelleştirme (başlık, kullanıcı@host, vurgu rengi, sosyal linkler)
-- Docker + GitHub Pages deploy desteği
+- Terminal simulation interface (neofetch style)
+- ASCII art logo (editable via `custom.yaml`)
+- Responsive design
+- Easy customization with `custom.yaml` (title, user@host, accent color, social links)
+- Docker + GitHub Pages deploy support
 
-## Kurulum
+## Setup
 
 ```bash
 git clone https://github.com/farukylmz0550/fetchfolio.git
 cd fetchfolio
-python3 -m http.server 8000
+python3 -m http.server 2222
 ```
 
-Tarayıcıda açın: `http://localhost:8000`
+Open in your browser: `http://localhost:2222`
 
-## Özelleştirme
+## Customization
 
-`custom.yaml` dosyasını düzenleyerek siteyi özelleştirebilirsiniz:
+Edit the `custom.yaml` file to customize the site:
 
 ```yaml
 site:
   version: "1.0.0"
-  title: "user@host:~/"
   user: "fetch"
   host: "folio"
 
 theme:
   accent_color: "#38bdf8"
 
-# Sosyal linkler — URL boş bırakılan ağların kutusu gizlenir
+# Social links — boxes for networks with an empty URL are hidden
 social:
   github: "https://github.com/farukylmz0550"
   youtube: ""
@@ -47,46 +45,47 @@ social:
   discord: ""
 ```
 
-İçerik sayfaları `content/tr/` ve `content/en/` altındaki Markdown dosyalarından
-okunur (`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`,
+Content pages are read from the Markdown files under `content/`
+(`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`,
 `licenses.md`).
 
-## Docker ile Çalıştırma
+## Running with Docker
 
 ```bash
 docker compose up --build
 # → http://localhost:3000
 ```
 
-Önceden derlenmiş imaj (ghcr.io'dan):
+Prebuilt image (from ghcr.io):
 
 ```bash
 docker run --rm -p 3000:80 ghcr.io/farukylmz0550/fetchfolio:latest
 ```
 
-`main` branch'ine her push'ta imaj otomatik derlenir ve `ghcr.io`'ya yayınlanır.
-`v*` formatında git tag'ları (ör. `v1.0.0`) sürüm etiketli imaj üretir.
+Every push to the `main` branch builds the image automatically and publishes
+it to `ghcr.io`. Git tags in the `v*` format (e.g. `v1.0.0`) produce a
+version-tagged image.
 
-## Sürümlendirme
+## Versioning
 
-[Semver](https://semver.org/) kullanılır: kırıcı değişiklikler major,
-özellikler minor, düzeltmeler patch.
+[Semver](https://semver.org/) is used: breaking changes bump major, features
+minor, fixes patch.
 
-- `1.0.0` — ilk resmi sürüm: CSS tekilleştirme, sosyal link yapılandırması,
-  erişilebilirlik iyileştirmeleri, Docker + GH Pages desteği
+- `1.0.0` — first official release: unified CSS, social link configuration,
+  accessibility improvements, Docker + GH Pages support
 
-### Geliştirici notu
+### Developer note
 
-`assets/css/site.css` değiştirdiğinde HTML dosyalarındaki
-`site.css?v=2` sürüm parametresini de yükselt — aksi halde tarayıcılar
-eski CSS'i önbellekten kullanmaya devam eder (GH Pages + nginx cache).
+When you change `assets/css/site.css`, also bump the `site.css?v=3`
+version parameter in the HTML files — otherwise browsers keep using the
+old CSS from cache (GH Pages + nginx cache).
 
-## Lisans
+## License
 
-Bu proje GNU General Public License v3.0 ile lisanslanmıştır.
-Ayrıntılar için [LICENSE](LICENSE) dosyasına bakın.
+This project is licensed under the GNU General Public License v3.0.
+See the [LICENSE](LICENSE) file for details.
 
-## Kullanılan Teknolojiler
+## Technologies Used
 
 - HTML5
 - CSS3

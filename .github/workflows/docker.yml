@@ -1,6 +1,6 @@
-# FetchFolio — Docker imajını ghcr.io'ya yayınla
-# main'e push → ghcr.io/farukylmz0550/fetchfolio:latest
-# v1.0.0 gibi tag → ghcr.io/farukylmz0550/fetchfolio:1.0.0
+# FetchFolio — Builds the Docker image and publishes it to ghcr.io
+# Push to main → ghcr.io/farukylmz0550/fetchfolio:latest
+# Tags like v1.0.0 → ghcr.io/farukylmz0550/fetchfolio:1.0.0
 name: Docker
 
 on:

@@ -1,9 +1,5 @@
 .git
 .github
-README.md
-LICENSE
-ascii-art.png
-ascii-art-clean.png
 Dockerfile
 docker-compose.yml
 .dockerignore

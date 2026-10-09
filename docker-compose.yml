@@ -1,4 +1,4 @@
-# FetchFolio — local development / self-host için compose
+# FetchFolio — compose for local development / self-hosting
 # Build: docker compose up --build   →  http://localhost:3000
 services:
   fetchfolio:
@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:80"
     volumes:
-      # Live editing: klasördeki değişiklikler anında 3000'de görünür
-      # (Dockerfile COPY'sini shadow eder, rebuild gerekmez)
+      # Live editing: changes in this folder appear instantly on :3000
+      # (shadows the Dockerfile COPY, no rebuild needed)
       - .:/usr/share/nginx/html:ro,z
     restart: unless-stopped

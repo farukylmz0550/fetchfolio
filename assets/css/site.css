@@ -1,10 +1,9 @@
 /* ------------------------------------------------------------------
-   FetchFolio — tekilleştirilmiş site CSS'i
-   (index.html + src/pages/*.html içindeki kopyalanmış stillerin birleşimi)
+   FetchFolio — consolidated site CSS
 ------------------------------------------------------------------- */
 
 :root {
-  --ff-accent: #38bdf8; /* custom.yaml theme.accent_color ile override edilir */
+  --ff-accent: #38bdf8; /* overridden by custom.yaml theme.accent_color */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,7 +22,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Animasyonlu ortam arka planı */
+/* Animated ambient background */
 body::before {
   content: '';
   position: fixed;
@@ -60,7 +59,7 @@ body::after {
   100% { opacity: 0.5; transform: scale(1); }
 }
 
-/* Erişilebilirlik: skip link */
+/* Accessibility: skip link */
 .skip-link {
   position: absolute;
   top: 8px;
@@ -78,7 +77,7 @@ body::after {
 }
 .skip-link:focus { transform: translateX(-50%) translateY(0); }
 
-/* Klavye odak göstergesi */
+/* Keyboard focus indicator */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -90,10 +89,10 @@ textarea:focus-visible,
   border-radius: 3px;
 }
 
-/* Terminal penceresi */
+/* Terminal window */
 .terminal-window {
   width: 800px;
-  height: 480px; /* body.page üzerinde 500px'e yükselir */
+  height: 480px; /* raised to 500px on body.page */
   background: rgba(18, 19, 22, 0.92);
   border: 1px solid #333;
   border-radius: 8px;
@@ -104,7 +103,7 @@ textarea:focus-visible,
 }
 body.page .terminal-window { height: 500px; }
 
-/* Başlık çubuğu */
+/* Title bar */
 .terminal-bar {
   background: #1e293b;
   padding: 8px 12px;
@@ -127,13 +126,13 @@ body.page .terminal-window { height: 500px; }
   white-space: nowrap;
 }
 
-/* Terminal gövdesi */
+/* Terminal body */
 .terminal-body {
   padding: 20px;
   font-size: 14px;
   line-height: 1.8;
   overflow-y: auto;
-  overflow-x: hidden; /* yatay scrollbar yok; geniş içerik sığdırılır */
+  overflow-x: hidden; /* no horizontal scrollbar; wide content wraps */
   flex: 1;
 }
 body.home .terminal-body {
@@ -148,11 +147,12 @@ body.home .terminal-body {
 .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 .terminal-body::-webkit-scrollbar-thumb:hover { background: var(--ff-accent); }
 
-/* neofetch ana sayfa */
+/* neofetch home page */
 .ascii-art {
   color: var(--ff-accent);
-  /* Art 106 karakter geniş; 6.5px ile ~413px olur ve 800px pencerede
-     (padding + gap + min-width 280 için ~450px pay) rahat sığar. */
+  /* The art is 106 chars wide; at 6.5px that is ~413px, which fits
+     comfortably inside the 800px window (padding + gap + ~450px share
+     for the min-width 280px info column). */
   font-size: 6.5px;
   line-height: 1.0;
   white-space: pre;
@@ -184,7 +184,7 @@ body.home .terminal-body {
 .value { color: #e2e8f0; }
 .nav-row:hover .value { color: #facc15; text-decoration: underline; }
 
-/* Sosyal medya kutuları */
+/* Social media boxes */
 .social-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-left: 4px; }
 .social-box {
   width: 20px; height: 20px;
@@ -203,26 +203,10 @@ body.home .terminal-body {
 .social-box.makerworld { background: #22c55e; }
 .social-box.gravatar   { background: #3b82f6; }
 .social-box.yellow     { background: #eab308; }
-.social-box.blue       { background: #3b82f6; }
 .social-box.purple     { background: #a855f7; }
 .social-box.white      { background: #f8fafc; }
 
-/* Dil düğmesi */
-.lang-btn {
-  margin-left: auto;
-  background: transparent;
-  color: #64748b;
-  border: 1px solid #333;
-  border-radius: 3px;
-  padding: 2px 8px;
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.lang-btn:hover { border-color: var(--ff-accent); color: var(--ff-accent); }
-
-/* İçerik sayfaları: $ cat file.md */
+/* Content pages: $ cat file.md */
 .prompt { color: #22c55e; font-weight: bold; }
 .cmd { color: #e2e8f0; }
 #content {
@@ -286,7 +270,7 @@ body.home .terminal-body {
 }
 .back-link:hover { text-decoration: underline; color: #facc15; }
 
-/* Yanıp sönen imleç */
+/* Blinking cursor */
 .cursor {
   display: inline-block;
   width: 8px;
@@ -298,7 +282,7 @@ body.home .terminal-body {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* Ekran okuyucu yardımcıları */
+/* Screen reader helpers */
 .screen-reader-text {
   position: absolute !important;
   width: 1px; height: 1px;
@@ -315,15 +299,15 @@ body.home .terminal-body {
   body.page .terminal-window { min-height: 400px; }
   .terminal-body { padding: 16px; }
   body.home .terminal-body { flex-direction: column; gap: 16px; }
-  /* Dar ekranda art sığsın: viewport'a göre küçült (106 kar * ~0.6em genişlik) */
+  /* Shrink the art to fit narrow viewports (106 chars * ~0.6em width) */
   .ascii-art { font-size: min(6.5px, 1.4vw); }
   .fetch-info { font-size: 12px; min-width: 0; width: 100%; }
   .key { min-width: 90px; }
 }
 
-/* Hareket azaltma tercihi */
+/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   body::before, body::after { animation: none; }
   .cursor { animation: none; }
-  .nav-row, .social-box, .lang-btn, .skip-link { transition: none; }
+  .nav-row, .social-box, .skip-link { transition: none; }
 }

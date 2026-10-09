@@ -1,22 +1,23 @@
-// fetchfolio - Config Loader
-// custom.yaml dosyasini okuyup siteyi gunceller.
-// - Relative path kullanir: GitHub Pages alt dizininde (…/fetchfolio/) de calisir.
-// - Vurgu rengi artık runtime <style> enjeksiyonu yerine --ff-accent CSS
-//   degiskenini gunceller (site.css bunu tuketir).
+// fetchfolio - Config loader
+// Reads custom.yaml and customizes the site:
+// - Uses relative paths so it also works in a GitHub Pages subdirectory.
+// - Accent color is applied by updating the --ff-accent CSS variable
+//   (site.css consumes it); no runtime <style> injection.
+// - Empty social URLs hide their boxes on the home page.
 
 let siteConfig = null;
 
 async function loadConfig() {
   try {
-    // 404.html GH Pages alt dizininde servis edilir; FF_BASE orada site kökünü gösterir.
+    // 404.html is served at arbitrary URLs; FF_BASE there points at the site root.
     const cfgPath = (window.FF_BASE ? window.FF_BASE : './') + 'custom.yaml';
     const response = await fetch(cfgPath);
-    if (!response.ok) throw new Error('Config yuklenemedi');
+    if (!response.ok) throw new Error('Failed to load config');
     const yamlText = await response.text();
     siteConfig = jsyaml.load(yamlText);
     applyConfig();
   } catch (err) {
-    console.warn('custom.yaml yuklenemedi, varsayilan degerler kullaniliyor:', err);
+    console.warn('Failed to load custom.yaml, using defaults:', err);
     siteConfig = getDefaultConfig();
     applyConfig();
   }
@@ -25,7 +26,6 @@ async function loadConfig() {
 function getDefaultConfig() {
   return {
     site: {
-      title: 'user@hostname:~/',
       user: 'user',
       host: 'hostname'
     },
@@ -36,16 +36,11 @@ function getDefaultConfig() {
   };
 }
 
-// "user@host:" oneki - sayfalarin toggleLang()'i bunu kullanir.
-function getUserHostPrefix() {
-  const site = (siteConfig && siteConfig.site) || {};
-  return (site.user || 'user') + '@' + (site.host || 'hostname');
-}
-
-// "user@hostname:~/hakkimda" -> "farukylmz@thinkpad:~/hakkimda"
-// Path soneki korunur; ana sayfada bu zaten "~/" ile biter.
+// "user@hostname:~/about" -> "faruk@ylmz:~/about"
+// The path suffix is preserved; on the home page it already ends with "~/".
 function applyTitlePrefix() {
-  const prefix = getUserHostPrefix();
+  const site = (siteConfig && siteConfig.site) || {};
+  const prefix = (site.user || 'user') + '@' + (site.host || 'hostname');
   [document.title, document.querySelector('.terminal-title')].forEach(el => {
     if (!el) return;
     const idx = el.textContent.indexOf(':');
@@ -63,7 +58,7 @@ function applyConfig() {
   const site = siteConfig.site || {};
   const theme = siteConfig.theme || {};
 
-  // Baslik / user / host
+  // User / host in the home page info block
   if (site.user || site.host) {
     const userHostEls = document.querySelectorAll('.user-host');
     if (userHostEls.length >= 2) {
@@ -73,22 +68,21 @@ function applyConfig() {
   }
   applyTitlePrefix();
 
-  // Vurgu rengi -> CSS degiskeni
+  // Accent color -> CSS variable
   if (theme.accent_color && theme.accent_color !== '#38bdf8') {
-    // Hex/rgb formatini kabaca dogrula, aksi halde varsayilana geri don.
+    // Roughly validate hex/rgb format, otherwise fall back to the default.
     if (/^#[0-9a-fA-F]{3,8}$/.test(theme.accent_color) || /^rgba?\(/.test(theme.accent_color)) {
       document.documentElement.style.setProperty('--ff-accent', theme.accent_color);
     }
   }
 
-  // Sosyal linkler (custom.yaml social bölümünden)
-  // Kutu siniflari site.css'te aynen korunur; URL'si olmayan kutu gizlenir.
+  // Social links (custom.yaml social section)
   applySocialLinks();
 }
 
 function applySocialLinks() {
   const social = (siteConfig && siteConfig.social) || {};
-  // key -> CSS kutu sinifi eslesmesi
+  // key -> CSS box class mapping
   const map = {
     github: 'github',
     youtube: 'youtube',
@@ -107,11 +101,11 @@ function applySocialLinks() {
       box.target = '_blank';
       box.rel = 'noopener noreferrer';
     } else {
-      // URL tanimlanmamissa kutuyu gizle (bos '#' linki kalmasin).
+      // Hide the box when no URL is defined (no dead "#" links).
       box.style.display = 'none';
     }
   });
 }
 
-// Sayfa yuklendiginde config'i yukle
+// Load the config on page load
 document.addEventListener('DOMContentLoaded', loadConfig);

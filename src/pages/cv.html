@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>user@hostname:~/cv</title>
   <link rel="icon" type="image/x-icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="../../assets/css/site.css?v=2">
+  <link rel="stylesheet" href="../../assets/css/site.css?v=3">
 </head>
 <body class="page">
-<a class="skip-link" href="#main">İçeriğe atla</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
   <div class="terminal-window">
     <div class="terminal-bar">
@@ -16,7 +16,6 @@
       <div class="terminal-dot dot-yellow"></div>
       <div class="terminal-dot dot-green"></div>
       <span class="terminal-title">user@hostname:~/cv</span>
-      <button class="lang-btn" onclick="toggleLang()" aria-label="Dili değiştir">TR</button>
     </div>
     <div class="terminal-body" id="main">
       <div><span class="prompt">$</span> <span class="cmd">cat cv.md</span><span class="cursor"></span></div>
@@ -28,24 +27,7 @@
   <script src="../../src/js/js-yaml.min.js"></script>
   <script src="../../src/js/config.js"></script>
   <script src="../../src/js/marked.min.js"></script>
-  <script src="../../src/js/i18n.js"></script>
   <script src="../../src/js/load-md.js"></script>
-  <script>
-    loadMarkdown('../../content/cv.md');
-
-    function toggleLang() {
-      const newLang = getLang() === 'tr' ? 'en' : 'tr';
-      setLang(newLang);
-      document.querySelector('.lang-btn').textContent = newLang.toUpperCase();
-      document.title = getUserHostPrefix() + ':' + t('titles.cv');
-      document.querySelector('.terminal-title').textContent = getUserHostPrefix() + ':' + t('titles.cv');
-      document.querySelector('.cmd').textContent = t('pages.cv');
-      loadMarkdown('../../content/cv.md');
-    }
-
-    document.querySelector('.lang-btn').textContent = getLang().toUpperCase();
-    document.querySelector('.cmd').textContent = t('pages.cv');
-    document.title = getUserHostPrefix() + ':' + t('titles.cv');
-  </script>
+  <script>loadMarkdown('../../content/cv.md');</script>
 </body>
 </html>

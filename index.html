@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>user@hostname:~/</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="assets/css/site.css?v=2">
+  <link rel="stylesheet" href="assets/css/site.css?v=3">
 </head>
 <body class="home">
-<a class="skip-link" href="#main">İçeriğe atla</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
   <div class="terminal-window">
     <div class="terminal-bar">
@@ -16,10 +16,9 @@
       <div class="terminal-dot dot-yellow"></div>
       <div class="terminal-dot dot-green"></div>
       <span class="terminal-title">user@hostname:~/</span>
-      <button class="lang-btn" onclick="toggleLang()" aria-label="Dili değiştir">TR</button>
     </div>
     <div class="terminal-body" id="main">
-      
+
       <div class="ascii-art" aria-hidden="true">=-%%%%%%%%%%%%%%%%%%%%%%%%%==                         
                                                   -%%%-%%%%%%%%%%%%%%@%%%%@%=**=                          
                                                 :=%%%%%#+@%%%%%%%%%%%%%%%=****:                           
@@ -62,30 +61,30 @@
       <div class="fetch-info">
         <div><span class="user-host">user</span>@<span class="user-host">hostname</span></div>
         <div class="separator">----------------------------------------</div>
-        
+
         <a href="src/pages/about.html" class="nav-row">
-          <span class="key" data-i18n="nav.about">Hakkımda:</span>
-          <span class="value" data-i18n="nav.aboutDesc">Geliştirici, Linux & Sistem Meraklısı</span>
+          <span class="key">About:</span>
+          <span class="value">Developer, Linux &amp; Systems Enthusiast</span>
         </a>
 
         <a href="src/pages/education.html" class="nav-row">
-          <span class="key" data-i18n="nav.education">Eğitim:</span>
-          <span class="value" data-i18n="nav.educationDesc">Okul Geçmişi & Çalışmalar</span>
+          <span class="key">Education:</span>
+          <span class="value">School History &amp; Studies</span>
         </a>
 
         <a href="src/pages/achievements.html" class="nav-row">
-          <span class="key" data-i18n="nav.achievements">Başarılar:</span>
-          <span class="value" data-i18n="nav.achievementsDesc">Projeler, Modlama & 3D Tasarımlar</span>
+          <span class="key">Achievements:</span>
+          <span class="value">Projects, Modding &amp; 3D Designs</span>
         </a>
 
         <a href="src/pages/cv.html" class="nav-row">
-          <span class="key" data-i18n="nav.cv">CV:</span>
-          <span class="value" data-i18n="nav.cvDesc">Özgeçmiş & Yetkinlikler</span>
+          <span class="key">CV:</span>
+          <span class="value">Resume &amp; Skills</span>
         </a>
 
         <a href="src/pages/contact.html" class="nav-row">
-          <span class="key" data-i18n="nav.contact">İletişim:</span>
-          <span class="value" data-i18n="nav.contactDesc">E-posta, GitHub & Sosyal Medya</span>
+          <span class="key">Contact:</span>
+          <span class="value">Email, GitHub &amp; Social Media</span>
         </a>
 
         <div class="social-links">
@@ -95,8 +94,8 @@
           <a href="#" class="social-box yellow" target="_blank" rel="noopener noreferrer" title="Hugging Face" aria-label="Hugging Face"></a>
           <a href="#" class="social-box gravatar" target="_blank" rel="noopener noreferrer" title="Gravatar" aria-label="Gravatar"></a>
           <a href="#" class="social-box purple" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"></a>
-          <a href="src/pages/licenses.html" class="social-box white" title="Lisanslar">
-            <img src="src/icons/license.svg" alt="Lisanslar">
+          <a href="src/pages/licenses.html" class="social-box white" title="Licenses">
+            <img src="src/icons/license.svg" alt="Licenses">
           </a>
         </div>
       </div>
@@ -105,27 +104,7 @@
   </div>
 
   <script src="src/js/js-yaml.min.js"></script>
-  <script src="src/js/i18n.js"></script>
   <script src="src/js/config.js"></script>
-  <script>
-    function toggleLang() {
-      const newLang = getLang() === 'tr' ? 'en' : 'tr';
-      setLang(newLang);
-      applyTranslations();
-      document.querySelector('.lang-btn').textContent = newLang.toUpperCase();
-    }
-
-    function applyTranslations() {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        const translation = t(key);
-        if (translation) el.textContent = translation;
-      });
-    }
-
-    document.querySelector('.lang-btn').textContent = getLang().toUpperCase();
-    applyTranslations();
-  </script>
 
 </body>
 </html>
