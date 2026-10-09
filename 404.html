@@ -4,19 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>user@hostname:~/404</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <!--
-    GitHub Pages serves 404.html at the missing URL itself, which breaks
-    relative paths. Detect the site root and write paths from that root.
-    (Root deploys get '/', project pages get '/fetchfolio/'.)
+    Served at the missing URL itself, so all asset paths must be absolute
+    from the site root (nginx and Docker both serve the site at /).
   -->
-  <script>
-    (function () {
-      var path = location.pathname.toLowerCase();
-      var base = path.indexOf('/fetchfolio/') === 0 ? '/fetchfolio/' : '/';
-      window.FF_BASE = base;
-      document.write('<link rel="stylesheet" href="' + base + 'assets/css/site.css?v=5">');
-    })();
-  </script>
+  <link rel="stylesheet" href="/assets/css/site.css?v=5">
 </head>
 <body class="page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -32,23 +25,20 @@
       <div><span class="prompt">$</span> <span class="cmd" id="cmd">cat 404.md</span><span class="cursor"></span></div>
       <div class="ff-content" id="content">
         <p><span style="color:#ef4444;">cat:</span> <span id="missed-path"></span>: No such file or directory.</p>
-        <a href="/" class="back-link" id="back-link">&lt; cd ~</a>
+        <a href="/" class="back-link">&lt; cd ~</a>
       </div>
     </div>
   </div>
 
   <script>
     (function () {
-      var base = window.FF_BASE || '/';
       var path = decodeURIComponent(location.pathname);
       var missed = document.getElementById('missed-path');
       var cmd = document.getElementById('cmd');
-      var back = document.getElementById('back-link');
 
       if (path.slice(-1) === '/') path = path.slice(0, -1);
       if (missed) missed.textContent = path;
       if (cmd) cmd.textContent = 'cat ' + path + '.md';
-      if (back) back.href = base;
     })();
   </script>
 </body>

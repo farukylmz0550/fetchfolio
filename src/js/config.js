@@ -1,7 +1,8 @@
 // fetchfolio - Config loader
 // Reads fetchfolio.config.yaml and customizes the site:
 // - fetchfolio.config.yaml is THE single config file, always at the site root.
-// - Uses relative paths so it also works in a GitHub Pages subdirectory.
+// - The site root is derived from this script's own URL, so it works on any
+//   deploy layout that keeps src/js/config.js relative to the root.
 // - Accent color is applied by updating the --ff-accent CSS variable
 //   (site.css consumes it); no runtime <style> injection.
 // - Empty social URLs keep the template homepage hrefs (see applySocialLinks).
@@ -12,14 +13,13 @@ let siteConfig = null;
 
 async function loadConfig() {
   try {
-    // Resolve the site root regardless of which page loads this script:
-    // config.js is always served from <root>/src/js/, so stripping that
-    // suffix from its own URL yields the root (404.html overrides via FF_BASE).
-    let root = './';
+    // Resolve the site root from the script URL (config.js is always
+    // served from <root>/src/js/). Works at / and any subdirectory.
+    let root = '/';
     if (document.currentScript && document.currentScript.src) {
       root = document.currentScript.src.replace(/\/src\/js\/config.js.*$/, '/');
     }
-    const cfgPath = (window.FF_BASE ? window.FF_BASE : root) + CONFIG_FILE;
+    const cfgPath = root + CONFIG_FILE;
     // cache: 'no-cache' revalidates every load, so config edits show up
     // after a plain reload (no cache-busting double-retry needed).
     const response = await fetch(cfgPath, { cache: 'no-cache' });

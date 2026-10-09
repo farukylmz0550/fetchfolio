@@ -1,44 +1,52 @@
 # fetchfolio
 
-A personal portfolio website. Terminal-themed, neofetch-style single-language (English).
+A personal portfolio website that looks like a terminal. **neofetch**-style home
+page, `$ cat about.md` content pages, and a blinking cursor — all vanilla
+HTML/CSS/JS, no build step, no frameworks.
 
-<img width="1920" height="962" alt="Screenshot From 2026-09-09 12-32-44" src="https://github.com/user-attachments/assets/b7811ce4-c817-4bc5-add6-80221a14b9af" />
+![screenshot](https://github.com/user-attachments/assets/b7811ce4-c817-4bc5-add6-80221a14b9af)
 
 ## Features
 
-- Terminal simulation interface (neofetch style)
-- ASCII art logo (editable via `fetchfolio.config.yaml`)
-- Responsive design
-- Easy customization with `fetchfolio.config.yaml` (title, user@host, accent color, social links)
-- Docker + GitHub Pages deploy support
+- Terminal simulation interface (neofetch style) with an ASCII art logo
+- ASCII art, user@host, accent color and social links configurable in a
+  single file: `fetchfolio.config.yaml`
+- Markdown content pages (`about.md`, `education.md`, `achievements.md`,
+  `cv.md`, `contact.md`) loaded at runtime
+- Terminal-themed 404 page (`cat missing-file.md`)
+- `Made by` signature with a GitHub profile link on the licenses page
+- Docker deployment (nginx:1.27-alpine base, ~50MB final image)
+- GitHub Actions workflow that publishes images to ghcr.io on every push
+  and on version tags
 
-## Setup
+## Quickstart
 
 ```bash
-git clone https://github.com/your-username/fetchfolio.git
+git clone https://github.com/farukylmz0550/fetchfolio.git
 cd fetchfolio
 python3 -m http.server 2222
 ```
 
 Open in your browser: `http://localhost:2222`
 
-## Customization
+## Configuration
 
-Edit the `fetchfolio.config.yaml` file to customize the site:
+Everything lives in ONE file: **`fetchfolio.config.yaml`** (always at the
+site root; **`config.js` locates it from any page under any subdirectory**).
 
 ```yaml
 site:
   version: "1.0.0"
-  user: "fetch"
-  host: "folio"
+  user: "user"       # user@host in the header; also prefixes page titles
+  host: "hostname"
 
 theme:
-  accent_color: "#38bdf8"
+  accent_color: "#38bdf8"   # any CSS color; drives --ff-accent
 
-# Social links — an empty network falls back to the site's homepage,
-# entering a URL points the box at your own profile page instead
+# Social links — every box is always visible. Leave a network empty and
+# the box stays at the site's homepage; put your own URL to point it there.
 social:
-  github: "https://github.com/your-username"
+  github: ""
   youtube: ""
   makerworld: ""
   linkedin: ""
@@ -51,50 +59,82 @@ social:
 #   -%%%-%%%%%==
 ```
 
-Content pages are read from the Markdown files under `content/`
-(`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`).
-The licenses page is hard-coded in `src/pages/licenses.html`.
+Notes:
+- Duplicate YAML keys are NOT silently accepted — `config.js` parses with
+  `{ json: true }` and falls back to defaults with a console warning.
+- Config edits show up after a plain reload — config and markdown fetches
+  use `{ cache: 'no-cache' }`.
 
-## Running with Docker
+## Content pages
+
+Markdown files under `content/` are rendered into the terminal by
+`marked.js` (`src/pages/*.html`):
+
+| Page | File |
+|---|---|
+| About | `content/about.md` |
+| Education | `content/education.md` |
+| Achievements | `content/achievements.md` |
+| CV | `content/cv.md` |
+| Contact | `content/contact.md` |
+
+The **licenses page is hard-coded** in `src/pages/licenses.html` — no
+markdown, one less network request.
+
+## Project structure
+
+```
+├── index.html              # neofetch-style home
+├── 404.html                # terminal-themed 404 (nginx error_page target)
+├── fetchfolio.config.yaml  # THE single configuration file
+├── assets/css/site.css     # all styles (bump ?v=N when you change it)
+├── content/*.md            # markdown source of the content pages
+└── src/
+    ├── js/config.js        # loads + applies the yaml config
+    ├── js/load-md.js       # fetches + renders markdown
+    ├── js/marked.min.js    # markdown parser (v15.0.12)
+    ├── js/js-yaml.min.js   # yaml parser (v4.1.0)
+    ├── pages/*.html        # inner pages
+    └── icons/*.svg         # social box brand icons (white)
+```
+
+## Docker
+
+Self-host the site on any machine:
+
+```bash
+docker build -t fetchfolio:latest .
+docker run --rm -p 3000:80 fetchfolio:latest
+# → http://localhost:3000
+```
+
+Or with compose (bind mount keeps `docker-compose.yml` watching the live
+files, no rebuild needed):
 
 ```bash
 docker compose up --build
 # → http://localhost:3000
 ```
 
-Prebuilt image (from ghcr.io):
+## Updating config/assets without touching index.html
 
-```bash
-docker run --rm -p 3000:80 ghcr.io/your-username/fetchfolio:latest
-```
+When you change `assets/css/site.css` or `src/js/{config,load-md}.js`,
+bump the `?v=N` query parameter in the HTML files — browsers keep using
+the old cached copy otherwise (browser + nginx cache).
 
-Every push to the `main` branch builds the image automatically and publishes
-it to `ghcr.io`. Git tags in the `v*` format (e.g. `v1.0.0`) produce a
-version-tagged image.
+## Releasing
 
-## Versioning
-
-[Semver](https://semver.org/) is used: breaking changes bump major, features
-minor, fixes patch.
-
-- `1.0.0` — first official release: unified CSS, social link configuration,
-  accessibility improvements, Docker + GH Pages support
-
-### Developer note
-
-When you change `assets/css/site.css`, also bump the `site.css?v=4`
-version parameter in the HTML files — otherwise browsers keep using the
-old CSS from cache (GH Pages + nginx cache).
+- `main` push and `v*` tags trigger **.github/workflows/docker.yml**,
+  which builds and pushes `ghcr.io/<owner>/fetchfolio:{latest,<version>}`
+- [Semver](https://semver.org/) is used: breaking changes bump major,
+  features minor, fixes patch
 
 ## License
 
 This project is licensed under the GNU General Public License v3.0.
-See the [LICENSE](LICENSE) file for details.
+See the [LICENSE](LICENSE) file for details. Third-party libraries and
+icons are listed on the licenses page (`src/pages/licenses.html`).
 
-## Technologies Used
+## Made by
 
-- HTML5
-- CSS3
-- JavaScript
-- marked.js (Markdown parser)
-- js-yaml (YAML parser)
+[farukylmz0550](https://github.com/farukylmz0550)
