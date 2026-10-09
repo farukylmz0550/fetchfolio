@@ -7,9 +7,9 @@ A personal portfolio website. Terminal-themed, neofetch-style single-language (E
 ## Features
 
 - Terminal simulation interface (neofetch style)
-- ASCII art logo (editable via `custom.yaml`)
+- ASCII art logo (editable via `fetchfolio.config.yaml`)
 - Responsive design
-- Easy customization with `custom.yaml` (title, user@host, accent color, social links)
+- Easy customization with `fetchfolio.config.yaml` (title, user@host, accent color, social links)
 - Docker + GitHub Pages deploy support
 
 ## Setup
@@ -24,7 +24,7 @@ Open in your browser: `http://localhost:2222`
 
 ## Customization
 
-Edit the `custom.yaml` file to customize the site:
+Edit the `fetchfolio.config.yaml` file to customize the site:
 
 ```yaml
 site:

@@ -1,23 +1,34 @@
 // fetchfolio - Config loader
-// Reads custom.yaml and customizes the site:
+// Reads fetchfolio.config.yaml and customizes the site:
+// - fetchfolio.config.yaml is THE single config file, always at the site root.
 // - Uses relative paths so it also works in a GitHub Pages subdirectory.
 // - Accent color is applied by updating the --ff-accent CSS variable
 //   (site.css consumes it); no runtime <style> injection.
-// - Empty social URLs hide their boxes on the home page.
+// - Empty social URLs keep the template homepage hrefs (see applySocialLinks).
+
+const CONFIG_FILE = 'fetchfolio.config.yaml';
 
 let siteConfig = null;
 
 async function loadConfig() {
   try {
-    // 404.html is served at arbitrary URLs; FF_BASE there points at the site root.
-    const cfgPath = (window.FF_BASE ? window.FF_BASE : './') + 'custom.yaml';
+    // Resolve the site root regardless of which page loads this script:
+    // config.js is always served from <root>/src/js/, so stripping that
+    // suffix from its own URL yields the root (404.html overrides via FF_BASE).
+    let root = './';
+    if (document.currentScript && document.currentScript.src) {
+      root = document.currentScript.src.replace(/\/src\/js\/config.js.*$/, '/');
+    }
+    const cfgPath = (window.FF_BASE ? window.FF_BASE : root) + CONFIG_FILE;
     const response = await fetch(cfgPath);
     if (!response.ok) throw new Error('Failed to load config');
     const yamlText = await response.text();
-    siteConfig = jsyaml.load(yamlText);
+    // { json: true } turns duplicate YAML keys into errors instead of
+    // silently keeping the last one — config conflicts fail loudly here.
+    siteConfig = jsyaml.load(yamlText, { json: true });
     applyConfig();
   } catch (err) {
-    console.warn('Failed to load custom.yaml, using defaults:', err);
+    console.warn('Failed to load fetchfolio.config.yaml, using defaults:', err);
     siteConfig = getDefaultConfig();
     applyConfig();
   }
@@ -76,7 +87,7 @@ function applyConfig() {
     }
   }
 
-  // Social links (custom.yaml social section)
+  // Social links (fetchfolio.config.yaml social section)
   applySocialLinks();
 }
 
@@ -96,7 +107,7 @@ function applySocialLinks() {
     if (!box) return;
     const url = social[key];
     // The template HTML already points every box at the network's homepage.
-    // Only override when custom.yaml defines a URL (e.g. your own profile).
+    // Only override when fetchfolio.config.yaml defines a URL (e.g. your own profile).
     if (url && typeof url === 'string' && url.trim()) {
       box.href = url.trim();
       box.target = '_blank';
