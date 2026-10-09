@@ -129,6 +129,17 @@ the old cached copy otherwise (browser + nginx cache).
 - [Semver](https://semver.org/) is used: breaking changes bump major,
   features minor, fixes patch
 
+### Changelog
+
+- **2.0.0** — breaking: config renamed to `fetchfolio.config.yaml`,
+  GitHub Pages support dropped, English-only (TR removed). Features:
+  social boxes with brand icons and homepage fallbacks (new LinkedIn),
+  `ascii_art` config override, duplicate-key config validation,
+  cache-free config/markdown reloads, hard-coded licenses page with a
+  "Made by" signature, static ambient background, terminal-themed 404
+- **1.0.0** — first official release: unified CSS, social link
+  configuration, accessibility improvements, Docker support
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0.
