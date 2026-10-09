@@ -4,7 +4,13 @@ A personal portfolio website that looks like a terminal. **neofetch**-style home
 page, `$ cat about.md` content pages, and a blinking cursor — all vanilla
 HTML/CSS/JS, no build step, no frameworks.
 
-![screenshot](https://github.com/user-attachments/assets/b7811ce4-c817-4bc5-add6-80221a14b9af)
+## Screenshots
+
+![Home — terminal / neofetch view](docs/screenshots/home.png)
+
+| Content pages | Licenses (hard-coded, with signature) |
+|---|---|
+| ![About page](docs/screenshots/about.png) | ![Licenses page](docs/screenshots/licenses.png) |
 
 ## Features
 
