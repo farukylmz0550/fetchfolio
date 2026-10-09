@@ -29,9 +29,16 @@ See [LICENSE](../../LICENSE) for details.
 ### Simple Icons
 **License:** CC0 1.0 Universal (Public Domain)
 **Web:** https://simpleicons.org/
-**Used icons:** GitHub, YouTube, Discord, Hugging Face
+**Used icons:** GitHub, YouTube, Discord
 
 > CC0 1.0 - Public domain icons free to use without attribution.
+
+### LinkedIn Icon
+**License:** Font Awesome Free — CC BY 4.0
+**Author:** Fonticons, Inc.
+**Web:** https://fontawesome.com/license/free
+
+> CC BY 4.0 - Requires attribution. © 2024 Fonticons, Inc.
 
 ### MakerWorld Icon
 **License:** Original / Simple Icons

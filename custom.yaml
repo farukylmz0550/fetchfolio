@@ -11,11 +11,10 @@ theme:
 
 # Social media links.
 # Networks entered without a URL have their box hidden on the home page.
-# Boxes: github, youtube, makerworld, huggingface, gravatar, discord
+# Boxes: github, youtube, makerworld, linkedin, discord
 social:
   github: "https://github.com/farukylmz0550"
   youtube: ""
   makerworld: ""
-  huggingface: ""
-  gravatar: ""
+  linkedin: ""
   discord: ""

@@ -22,7 +22,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Animated ambient background */
+/* Static ambient background */
 body::before {
   content: '';
   position: fixed;
@@ -34,7 +34,6 @@ body::before {
     radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 70% 20%, rgba(250, 204, 21, 0.06) 0%, transparent 35%),
     radial-gradient(ellipse at 30% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 35%);
-  animation: wave 12s ease-in-out infinite;
   z-index: -1;
 }
 body::after {
@@ -43,20 +42,7 @@ body::after {
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
-  animation: pulse 8s ease-in-out infinite reverse;
   z-index: -1;
-}
-@keyframes wave {
-  0%   { transform: translate(0, 0) scale(1); }
-  25%  { transform: translate(4%, -3%) scale(1.03); }
-  50%  { transform: translate(-3%, 4%) scale(0.97); }
-  75%  { transform: translate(3%, 1%) scale(1.02); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-@keyframes pulse {
-  0%   { opacity: 0.5; transform: scale(1); }
-  50%  { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.5; transform: scale(1); }
 }
 
 /* Accessibility: skip link */
@@ -201,8 +187,7 @@ body.home .terminal-body {
 .social-box.github     { background: #000000; }
 .social-box.youtube    { background: #ef4444; }
 .social-box.makerworld { background: #22c55e; }
-.social-box.gravatar   { background: #3b82f6; }
-.social-box.yellow     { background: #eab308; }
+.social-box.linkedin   { background: #3b82f6; }
 .social-box.purple     { background: #a855f7; }
 .social-box.white      { background: #f8fafc; }
 
@@ -307,7 +292,5 @@ body.home .terminal-body {
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  body::before, body::after { animation: none; }
   .cursor { animation: none; }
-  .nav-row, .social-box, .skip-link { transition: none; }
 }

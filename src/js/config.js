@@ -87,8 +87,7 @@ function applySocialLinks() {
     github: 'github',
     youtube: 'youtube',
     makerworld: 'makerworld',
-    huggingface: 'yellow',
-    gravatar: 'gravatar',
+    linkedin: 'linkedin',
     discord: 'purple'
   };
 

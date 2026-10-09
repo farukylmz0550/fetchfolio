@@ -40,8 +40,7 @@ social:
   github: "https://github.com/farukylmz0550"
   youtube: ""
   makerworld: ""
-  huggingface: ""
-  gravatar: ""
+  linkedin: ""
   discord: ""
 ```
 
