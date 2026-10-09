@@ -255,6 +255,10 @@ body.home .terminal-body {
 }
 .back-link:hover { text-decoration: underline; color: #facc15; }
 
+/* Signature line on the licenses page */
+.made-by { margin-top: 24px; }
+.made-by a { font-weight: bold; }
+
 /* Blinking cursor */
 .cursor {
   display: inline-block;
