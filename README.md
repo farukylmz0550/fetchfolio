@@ -35,7 +35,8 @@ site:
 theme:
   accent_color: "#38bdf8"
 
-# Social links — boxes for networks with an empty URL are hidden
+# Social links — an empty network falls back to the site's homepage,
+# entering a URL points the box at your own profile page instead
 social:
   github: "https://github.com/farukylmz0550"
   youtube: ""

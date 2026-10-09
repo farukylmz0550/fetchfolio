@@ -95,14 +95,18 @@ function applySocialLinks() {
     const box = document.querySelector('.social-box.' + map[key]);
     if (!box) return;
     const url = social[key];
-    if (url && typeof url === 'string' && url.trim()) {
-      box.href = url.trim();
-      box.target = '_blank';
-      box.rel = 'noopener noreferrer';
-    } else {
-      // Hide the box when no URL is defined (no dead "#" links).
-      box.style.display = 'none';
-    }
+    // Default template behavior: empty custom.yaml entry falls back to the
+    // network's homepage, so boxes stay visible and always go somewhere.
+    const DEFAULTS = {
+      github: 'https://github.com',
+      youtube: 'https://www.youtube.com',
+      makerworld: 'https://makerworld.com',
+      linkedin: 'https://www.linkedin.com',
+      discord: 'https://discord.com'
+    };
+    box.href = (url && typeof url === 'string' && url.trim()) ? url.trim() : DEFAULTS[key];
+    box.target = '_blank';
+    box.rel = 'noopener noreferrer';
   });
 }
 

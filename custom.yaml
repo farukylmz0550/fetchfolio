@@ -10,10 +10,11 @@ theme:
   accent_color: "#38bdf8"
 
 # Social media links.
-# Networks entered without a URL have their box hidden on the home page.
+# Every box is always visible on the home page: leaving a network empty
+# uses that site's homepage, entering a URL points the box there instead.
 # Boxes: github, youtube, makerworld, linkedin, discord
 social:
-  github: "https://github.com/farukylmz0550"
+  github: ""
   youtube: ""
   makerworld: ""
   linkedin: ""
