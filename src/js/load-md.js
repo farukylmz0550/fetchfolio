@@ -23,7 +23,7 @@ function loadMarkdown(file) {
       '<code style="color:#38bdf8;">python3 -m http.server 2222</code></p>';
   }
 
-  fetch(file)
+  fetch(file, { cache: 'no-cache' })
     .then(res => {
       if (!res.ok) throw new Error(res.status);
       return res.text();

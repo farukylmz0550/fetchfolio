@@ -20,7 +20,9 @@ async function loadConfig() {
       root = document.currentScript.src.replace(/\/src\/js\/config.js.*$/, '/');
     }
     const cfgPath = (window.FF_BASE ? window.FF_BASE : root) + CONFIG_FILE;
-    const response = await fetch(cfgPath);
+    // cache: 'no-cache' revalidates every load, so config edits show up
+    // after a plain reload (no cache-busting double-retry needed).
+    const response = await fetch(cfgPath, { cache: 'no-cache' });
     if (!response.ok) throw new Error('Failed to load config');
     const yamlText = await response.text();
     // { json: true } turns duplicate YAML keys into errors instead of

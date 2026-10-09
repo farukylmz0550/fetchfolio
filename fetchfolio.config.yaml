@@ -2,9 +2,9 @@
 # Edit this file to customize the site.
 
 site:
-  version: "1.0.0"
-  user: "user"
-  host: "hostname"
+  version: "2.0.0"
+  user: "faruk"
+  host: "ylmz"
 
 theme:
   accent_color: "#38bdf8"
