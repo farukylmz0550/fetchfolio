@@ -47,7 +47,7 @@ function getDefaultConfig() {
   };
 }
 
-// "user@hostname:~/about" -> "faruk@ylmz:~/about"
+// "user@hostname:~/about" -> "custom@values:~/about"
 // The path suffix is preserved; on the home page it already ends with "~/".
 function applyTitlePrefix() {
   const site = (siteConfig && siteConfig.site) || {};

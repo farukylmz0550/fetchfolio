@@ -15,7 +15,7 @@ A personal portfolio website. Terminal-themed, neofetch-style single-language (E
 ## Setup
 
 ```bash
-git clone https://github.com/farukylmz0550/fetchfolio.git
+git clone https://github.com/your-username/fetchfolio.git
 cd fetchfolio
 python3 -m http.server 2222
 ```
@@ -38,7 +38,7 @@ theme:
 # Social links — an empty network falls back to the site's homepage,
 # entering a URL points the box at your own profile page instead
 social:
-  github: "https://github.com/farukylmz0550"
+  github: "https://github.com/your-username"
   youtube: ""
   makerworld: ""
   linkedin: ""
@@ -59,7 +59,7 @@ docker compose up --build
 Prebuilt image (from ghcr.io):
 
 ```bash
-docker run --rm -p 3000:80 ghcr.io/farukylmz0550/fetchfolio:latest
+docker run --rm -p 3000:80 ghcr.io/your-username/fetchfolio:latest
 ```
 
 Every push to the `main` branch builds the image automatically and publishes

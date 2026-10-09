@@ -3,7 +3,7 @@
 services:
   fetchfolio:
     build: .
-    image: ghcr.io/farukylmz0550/fetchfolio:latest
+    image: fetchfolio:latest
     ports:
       - "3000:80"
     volumes:

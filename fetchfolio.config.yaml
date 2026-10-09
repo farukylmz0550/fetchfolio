@@ -3,8 +3,8 @@
 
 site:
   version: "1.0.0"
-  user: "faruk"
-  host: "ylmz"
+  user: "user"
+  host: "hostname"
 
 theme:
   accent_color: "#38bdf8"
