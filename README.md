@@ -52,8 +52,8 @@ social:
 ```
 
 Content pages are read from the Markdown files under `content/`
-(`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`,
-`licenses.md`).
+(`about.md`, `education.md`, `achievements.md`, `cv.md`, `contact.md`).
+The licenses page is hard-coded in `src/pages/licenses.html`.
 
 ## Running with Docker
 
@@ -82,7 +82,7 @@ minor, fixes patch.
 
 ### Developer note
 
-When you change `assets/css/site.css`, also bump the `site.css?v=3`
+When you change `assets/css/site.css`, also bump the `site.css?v=4`
 version parameter in the HTML files — otherwise browsers keep using the
 old CSS from cache (GH Pages + nginx cache).
 
