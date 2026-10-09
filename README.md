@@ -43,6 +43,12 @@ social:
   makerworld: ""
   linkedin: ""
   discord: ""
+
+# Optional ASCII art override — replaces the home page art when set.
+# Keep the |- block form and the leading spaces of the art lines:
+# ascii_art: |
+#   =-%%%%%%%%%==
+#   -%%%-%%%%%==
 ```
 
 Content pages are read from the Markdown files under `content/`

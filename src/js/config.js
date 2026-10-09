@@ -88,6 +88,12 @@ function applyConfig() {
     }
   }
 
+  // ASCII art — accepts a |- block string; empty keeps the template art
+  const artEl = document.querySelector('.ascii-art');
+  if (artEl && siteConfig.ascii_art && typeof siteConfig.ascii_art === 'string' && siteConfig.ascii_art.trim()) {
+    artEl.textContent = siteConfig.ascii_art;
+  }
+
   // Social links (fetchfolio.config.yaml social section)
   applySocialLinks();
 }

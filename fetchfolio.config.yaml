@@ -2,12 +2,17 @@
 # Edit this file to customize the site.
 
 site:
-  version: "2.0.0"
+  version: "1.0.0"
   user: "faruka"
   host: "ylmz"
 
 theme:
   accent_color: "#38bdf8"
+
+# Multiline ASCII art shown on the home page. Use the |- block form and
+# keep the leading spaces of each art line. Leave empty ("") to keep the
+# template art from index.html as-is.
+ascii_art: ""
 
 # Social media links.
 # Every box is always visible on the home page: leaving a network empty
