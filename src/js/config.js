@@ -95,18 +95,13 @@ function applySocialLinks() {
     const box = document.querySelector('.social-box.' + map[key]);
     if (!box) return;
     const url = social[key];
-    // Default template behavior: empty custom.yaml entry falls back to the
-    // network's homepage, so boxes stay visible and always go somewhere.
-    const DEFAULTS = {
-      github: 'https://github.com',
-      youtube: 'https://www.youtube.com',
-      makerworld: 'https://makerworld.com',
-      linkedin: 'https://www.linkedin.com',
-      discord: 'https://discord.com'
-    };
-    box.href = (url && typeof url === 'string' && url.trim()) ? url.trim() : DEFAULTS[key];
-    box.target = '_blank';
-    box.rel = 'noopener noreferrer';
+    // The template HTML already points every box at the network's homepage.
+    // Only override when custom.yaml defines a URL (e.g. your own profile).
+    if (url && typeof url === 'string' && url.trim()) {
+      box.href = url.trim();
+      box.target = '_blank';
+      box.rel = 'noopener noreferrer';
+    }
   });
 }
 
