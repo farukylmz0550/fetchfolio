@@ -51,18 +51,17 @@ function getDefaultConfig() {
 
 // "user@hostname:~/about" -> "custom@values:~/about"
 // The path suffix is preserved; on the home page it already ends with "~/".
+// document.title is a plain string — it gets assigned directly, while the
+// terminal-bar element gets its textContent set.
 function applyTitlePrefix() {
   const site = (siteConfig && siteConfig.site) || {};
   const prefix = (site.user || 'user') + '@' + (site.host || 'hostname');
-  [document.title, document.querySelector('.terminal-title')].forEach(el => {
-    if (!el) return;
-    const idx = el.textContent.indexOf(':');
-    if (idx === -1) {
-      el.textContent = prefix + ':~/';
-    } else {
-      el.textContent = prefix + el.textContent.slice(idx);
-    }
-  });
+  const current = document.title;
+  const idx = current.indexOf(':');
+  const text = current.indexOf(':') === -1 ? prefix + ':~/' : prefix + current.slice(idx);
+  document.title = text;
+  const el = document.querySelector('.terminal-title');
+  if (el) el.textContent = text;
 }
 
 function applyConfig() {
