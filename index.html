@@ -3,9 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>user@hostname:~/</title>
+  <title>Your Name — Developer, Linux &amp; Systems Portfolio</title>
+  <meta name="description" content="Portfolio of Your Name — developer, Linux and systems enthusiast. Projects, CV, education and contact in a terminal-themed portfolio.">
+  <meta name="author" content="Your Name">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://example.com/">
+  <meta name="theme-color" content="#0c0c0d">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="assets/css/site.css?v=5">
+  <link rel="stylesheet" href="assets/css/site.css?v=7">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Your Name — Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Your Name — Developer, Linux &amp; Systems Portfolio">
+  <meta property="og:description" content="Portfolio of Your Name — developer, Linux and systems enthusiast. Projects, CV, education and contact in a terminal-themed portfolio.">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/assets/img/og-cover.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta property="og:image:alt" content="The terminal-style home page of the Your Name portfolio">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Your Name — Developer, Linux &amp; Systems Portfolio">
+  <meta name="twitter:description" content="Portfolio of Your Name — developer, Linux and systems enthusiast. Projects, CV, education and contact in a terminal-themed portfolio.">
+  <meta name="twitter:image" content="https://example.com/assets/img/og-cover.png">
+  <meta name="twitter:image:alt" content="The terminal-style home page of the Your Name portfolio">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://example.com/#person",
+        "name": "Your Name",
+        "url": "https://example.com/",
+        "jobTitle": "Developer",
+        "email": "mailto:example@email.com",
+        "knowsAbout": ["Linux", "Software Development", "Open Source", "User Experience", "3D Printing"],
+        "sameAs": [
+          "https://github.com/username",
+          "https://www.youtube.com/@username",
+          "https://www.linkedin.com/in/username/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://example.com/#website",
+        "url": "https://example.com/",
+        "name": "Your Name — Portfolio",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://example.com/#person" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://example.com/#webpage",
+        "url": "https://example.com/",
+        "name": "Your Name — Developer, Linux & Systems Portfolio",
+        "isPartOf": { "@id": "https://example.com/#website" },
+        "about": { "@id": "https://example.com/#person" },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -17,7 +80,7 @@
       <div class="terminal-dot dot-green"></div>
       <span class="terminal-title">user@hostname:~/</span>
     </div>
-    <div class="terminal-body" id="main">
+    <main class="terminal-body" id="main">
 
       <div class="ascii-art" aria-hidden="true">=-%%%%%%%%%%%%%%%%%%%%%%%%%==                         
                                                   -%%%-%%%%%%%%%%%%%%@%%%%@%=**=                          
@@ -59,61 +122,64 @@
                                         ++</div>
 
       <div class="fetch-info">
+        <h1 class="nav-row row-static"><span class="key">Name:</span><span class="value" data-site-name>Your Name</span></h1>
         <div><span class="user-host">user</span>@<span class="user-host">hostname</span></div>
         <div class="separator">----------------------------------------</div>
 
-        <a href="src/pages/about.html" class="nav-row">
-          <span class="key">About:</span>
-          <span class="value">Developer, Linux &amp; Systems Enthusiast</span>
-        </a>
+        <nav aria-label="Sections">
+          <a href="src/pages/about.html" class="nav-row">
+            <span class="key">About:</span>
+            <span class="value">Developer, Linux &amp; Systems Enthusiast</span>
+          </a>
 
-        <a href="src/pages/education.html" class="nav-row">
-          <span class="key">Education:</span>
-          <span class="value">School History &amp; Studies</span>
-        </a>
+          <a href="src/pages/education.html" class="nav-row">
+            <span class="key">Education:</span>
+            <span class="value">School History &amp; Studies</span>
+          </a>
 
-        <a href="src/pages/achievements.html" class="nav-row">
-          <span class="key">Achievements:</span>
-          <span class="value">Projects, Modding &amp; 3D Designs</span>
-        </a>
+          <a href="src/pages/achievements.html" class="nav-row">
+            <span class="key">Achievements:</span>
+            <span class="value">Projects, Modding &amp; 3D Designs</span>
+          </a>
 
-        <a href="src/pages/cv.html" class="nav-row">
-          <span class="key">CV:</span>
-          <span class="value">Resume &amp; Skills</span>
-        </a>
+          <a href="src/pages/cv.html" class="nav-row">
+            <span class="key">CV:</span>
+            <span class="value">Resume &amp; Skills</span>
+          </a>
 
-        <a href="src/pages/contact.html" class="nav-row">
-          <span class="key">Contact:</span>
-          <span class="value">Email, GitHub &amp; Social Media</span>
-        </a>
+          <a href="src/pages/contact.html" class="nav-row">
+            <span class="key">Contact:</span>
+            <span class="value">Email, GitHub &amp; Social Media</span>
+          </a>
+        </nav>
 
-        <div class="social-links">
+        <nav class="social-links" aria-label="Profiles">
           <a href="https://github.com" class="social-box github" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-            <img src="src/icons/github.svg" alt="GitHub">
+            <img src="src/icons/github.svg" alt="">
           </a>
           <a href="https://www.youtube.com" class="social-box youtube" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
-            <img src="src/icons/youtube.svg" alt="YouTube">
+            <img src="src/icons/youtube.svg" alt="">
           </a>
           <a href="https://makerworld.com" class="social-box makerworld" target="_blank" rel="noopener noreferrer" title="MakerWorld" aria-label="MakerWorld">
-            <img src="src/icons/makerworld.svg" alt="MakerWorld">
+            <img src="src/icons/makerworld.svg" alt="">
           </a>
           <a href="https://www.linkedin.com" class="social-box linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-            <img src="src/icons/linkedin.svg" alt="LinkedIn">
+            <img src="src/icons/linkedin.svg" alt="">
           </a>
           <a href="https://discord.com" class="social-box purple" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord">
-            <img src="src/icons/discord.svg" alt="Discord">
+            <img src="src/icons/discord.svg" alt="">
           </a>
           <a href="src/pages/licenses.html" class="social-box white" title="Licenses">
-            <img src="src/icons/license.svg" alt="Licenses">
+            <img src="src/icons/license.svg" alt="">
           </a>
-        </div>
+        </nav>
       </div>
 
-    </div>
+    </main>
   </div>
 
   <script src="src/js/js-yaml.min.js"></script>
-  <script src="src/js/config.js?v=8"></script>
+  <script src="src/js/config.js?v=9"></script>
 
 </body>
 </html>

@@ -2,9 +2,12 @@
 # Edit this file to customize the site.
 
 site:
-  version: "2.0.0"
+  version: "2.1.0"
   user: "user"
   host: "hostname"
+  # Site owner's name — shown in the home page <h1> (also what search
+  # engines read without JavaScript, so keep it accurate).
+  name: "Your Name"
 
 theme:
   accent_color: "#38bdf8"

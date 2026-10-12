@@ -149,6 +149,10 @@ body.home .terminal-body {
   min-width: 0;
 }
 .fetch-info { font-size: 14px; line-height: 1.8; flex: 1; min-width: 280px; }
+/* The home page <h1> is a neofetch info row, so it must not pick up the
+   browser's h1 font size/weight (it is the page's real heading for SEO). */
+.fetch-info h1 { font-size: inherit; font-weight: inherit; line-height: inherit; color: inherit; }
+.nav-row.row-static:hover { background-color: transparent; transform: none; }
 .user-host { color: var(--ff-accent); font-weight: bold; }
 .separator { color: #4b5563; margin-bottom: 8px; }
 

@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>user@hostname:~/404</title>
+  <title>404 — File Not Found | Your Name Portfolio</title>
+  <meta name="description" content="The file you requested does not exist. Go back to the home page of the Your Name portfolio.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0c0c0d">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <!--
     Served at the missing URL itself, so all asset paths must be absolute
     from the site root (nginx and Docker both serve the site at /).
   -->
-  <link rel="stylesheet" href="/assets/css/site.css?v=5">
+  <link rel="stylesheet" href="/assets/css/site.css?v=7">
 </head>
 <body class="page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -21,15 +24,18 @@
       <div class="terminal-dot dot-green" aria-hidden="true"></div>
       <span class="terminal-title">user@hostname:~/404</span>
     </div>
-    <div class="terminal-body" id="main">
+    <main class="terminal-body" id="main">
       <div><span class="prompt">$</span> <span class="cmd" id="cmd">cat 404.md</span><span class="cursor"></span></div>
-      <div class="ff-content" id="content">
+      <article class="ff-content" id="content">
+        <h1>File not found</h1>
         <p><span style="color:#ef4444;">cat:</span> <span id="missed-path"></span>: No such file or directory.</p>
         <a href="/" class="back-link">&lt; cd ~</a>
-      </div>
-    </div>
+      </article>
+    </main>
   </div>
 
+  <script src="/src/js/js-yaml.min.js"></script>
+  <script src="/src/js/config.js?v=9"></script>
   <script>
     (function () {
       var path = decodeURIComponent(location.pathname);

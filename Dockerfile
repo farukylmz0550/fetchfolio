@@ -6,7 +6,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/fetchfolio.conf
 
 # Site files
-COPY index.html 404.html favicon.ico fetchfolio.config.yaml /usr/share/nginx/html/
+COPY index.html 404.html favicon.ico robots.txt sitemap.xml fetchfolio.config.yaml /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
 COPY content/ /usr/share/nginx/html/content/
 COPY src/ /usr/share/nginx/html/src/

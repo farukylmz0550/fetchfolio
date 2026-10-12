@@ -24,6 +24,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Crawlers read the baked-in HTML, so the pages must not drift from
+      # content/*.md — fail the build when someone forgets to re-render.
+      - name: Check prerendered content
+        run: python3 scripts/prerender.py --check
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 

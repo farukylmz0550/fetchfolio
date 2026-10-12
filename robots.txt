@@ -1,0 +1,8 @@
+# fetchfolio — https://example.com/robots.txt
+User-agent: *
+Allow: /
+
+# The terminal 404 page must never show up in search results.
+Disallow: /404.html
+
+Sitemap: https://example.com/sitemap.xml

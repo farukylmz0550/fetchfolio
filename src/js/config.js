@@ -5,6 +5,8 @@
 //   deploy layout that keeps src/js/config.js relative to the root.
 // - Accent color is applied by updating the --ff-accent CSS variable
 //   (site.css consumes it); no runtime <style> injection.
+// - The SEO <title> copy is left alone; only the terminal bar (and pages that
+//   still carry the raw "user@hostname:~/..." template title) get rewritten.
 // - Empty social URLs keep the template homepage hrefs (see applySocialLinks).
 
 const CONFIG_FILE = 'fetchfolio.config.yaml';
@@ -51,17 +53,33 @@ function getDefaultConfig() {
 
 // "user@hostname:~/about" -> "custom@values:~/about"
 // The path suffix is preserved; on the home page it already ends with "~/".
-// document.title is a plain string — it gets assigned directly, while the
-// terminal-bar element gets its textContent set.
+// Only the terminal bar and the raw template title are rewritten — the SEO
+// <title> copy (e.g. "About Me — Your Name") must stay untouched, so the
+// template prefix is the signal that a page still ships the default title.
 function applyTitlePrefix() {
   const site = (siteConfig && siteConfig.site) || {};
   const prefix = (site.user || 'user') + '@' + (site.host || 'hostname');
-  const current = document.title;
-  const idx = current.indexOf(':');
-  const text = current.indexOf(':') === -1 ? prefix + ':~/' : prefix + current.slice(idx);
-  document.title = text;
+  const withPrefix = (text) => {
+    const idx = text.indexOf(':');
+    return idx === -1 ? prefix + ':~/' : prefix + text.slice(idx);
+  };
+
   const el = document.querySelector('.terminal-title');
-  if (el) el.textContent = text;
+  if (el) el.textContent = withPrefix(el.textContent);
+
+  if (document.title.indexOf('user@hostname:') === 0) {
+    document.title = withPrefix(document.title);
+  }
+}
+
+// Home page h1: site.name from fetchfolio.config.yaml. When the key is
+// missing the markup value stays, which is also what crawlers read.
+function applySiteName() {
+  const site = (siteConfig && siteConfig.site) || {};
+  const el = document.querySelector('[data-site-name]');
+  if (el && typeof site.name === 'string' && site.name.trim()) {
+    el.textContent = site.name.trim();
+  }
 }
 
 function applyConfig() {
@@ -79,6 +97,7 @@ function applyConfig() {
     }
   }
   applyTitlePrefix();
+  applySiteName();
 
   // Accent color -> CSS variable
   if (theme.accent_color && theme.accent_color !== '#38bdf8') {
