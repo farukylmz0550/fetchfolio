@@ -123,7 +123,9 @@ body.page .terminal-window { height: 500px; }
 }
 body.home .terminal-body {
   display: flex;
-  flex-wrap: nowrap;
+  /* wrap: long info rows (e.g. translated text) drop the info column below
+     the art instead of being clipped — the body hides horizontal overflow. */
+  flex-wrap: wrap;
   gap: 30px;
   padding: 20px;
   align-items: flex-start;
@@ -146,9 +148,22 @@ body.home .terminal-body {
   font-weight: bold;
   letter-spacing: 0px;
   flex-shrink: 0;
+  /* Never wider than its column; a very wide art scrolls inside its own box
+     instead of pushing the info rows out of the window. */
+  max-width: 100%;
+  overflow-x: auto;
   min-width: 0;
 }
-.fetch-info { font-size: 14px; line-height: 1.8; flex: 1; min-width: 280px; }
+.fetch-info {
+  font-size: 14px;
+  line-height: 1.8;
+  /* 1 1 280px: shrinks to the leftover space, but never below 280px — so it
+     wraps to the next line (flex-wrap above) rather than overflowing. */
+  flex: 1 1 280px;
+  min-width: 280px;
+  /* Long unbroken strings (URLs, compounds) break instead of overflowing. */
+  overflow-wrap: anywhere;
+}
 /* The home page <h1> is a neofetch info row, so it must not pick up the
    browser's h1 font size/weight (it is the page's real heading for SEO). */
 .fetch-info h1 { font-size: inherit; font-weight: inherit; line-height: inherit; color: inherit; }

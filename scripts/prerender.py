@@ -25,11 +25,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # content/<name>.md -> the page that embeds it (licenses.html is plain HTML).
 PAGES: dict[str, str] = {
-    "about": "src/pages/about.html",
-    "achievements": "src/pages/achievements.html",
-    "contact": "src/pages/contact.html",
-    "cv": "src/pages/cv.html",
-    "education": "src/pages/education.html",
+    "about": "about.html",
+    "achievements": "achievements.html",
+    "contact": "contact.html",
+    "cv": "cv.html",
+    "education": "education.html",
 }
 
 HEADING = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*$")

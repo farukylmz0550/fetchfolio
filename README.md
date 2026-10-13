@@ -80,7 +80,7 @@ Notes:
 ## Content pages
 
 Markdown files under `content/` are rendered into the terminal by
-`marked.js` (`src/pages/*.html`):
+`marked.js` (`<page>.html` at the repo root):
 
 | Page | File |
 |---|---|
@@ -90,7 +90,7 @@ Markdown files under `content/` are rendered into the terminal by
 | CV | `content/cv.md` |
 | Contact | `content/contact.md` |
 
-The **licenses page is hard-coded** in `src/pages/licenses.html` — no
+The **licenses page is hard-coded** in `licenses.html` (repo root) — no
 markdown, one less network request.
 
 ### Prerendering (matters for SEO)
@@ -207,7 +207,7 @@ the old cached copy otherwise (browser + nginx cache).
 
 This project is licensed under the GNU General Public License v3.0.
 See the [LICENSE](LICENSE) file for details. Third-party libraries and
-icons are listed on the licenses page (`src/pages/licenses.html`).
+icons are listed on the licenses page (`licenses.html` at the repo root).
 
 ## Made by
 
