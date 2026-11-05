@@ -274,6 +274,20 @@ body.home .terminal-body {
 }
 .back-link:hover { text-decoration: underline; color: #facc15; }
 
+/* Blog index and posts */
+.blog-list { margin-top: 8px; }
+.blog-card { border-left: 2px solid #334155; padding: 10px 14px; margin-bottom: 14px; }
+.blog-card:hover { border-left-color: var(--ff-accent); background: rgba(30, 41, 59, 0.35); }
+.blog-card h2 { margin: 2px 0 6px !important; font-size: 16px !important; }
+.blog-card h2::before { content: none !important; }
+.blog-card h2 a { color: #e2e8f0; text-decoration: none; }
+.blog-card h2 a:hover { color: var(--ff-accent); }
+.blog-meta { color: #64748b; font-size: 12px; }
+.blog-card p { margin-bottom: 7px !important; }
+.blog-read { color: var(--ff-accent); font-size: 12px; text-decoration: none; }
+.blog-read:hover { color: #facc15; text-decoration: underline; }
+.blog-empty { color: #64748b; }
+
 /* Signature line on the licenses page */
 .made-by { margin-top: 24px; }
 .made-by a { font-weight: bold; }

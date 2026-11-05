@@ -2,7 +2,7 @@
 # Edit this file to customize the site.
 
 site:
-  version: "2.1.0"
+  version: "2.2.0"
   user: "user"
   host: "hostname"
   # Site owner's name — shown in the home page <h1> (also what search

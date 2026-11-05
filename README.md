@@ -19,6 +19,7 @@ HTML/CSS/JS, no build step, no frameworks.
   configurable in a single file: `fetchfolio.config.yaml`
 - Markdown content pages (`about.md`, `education.md`, `achievements.md`,
   `cv.md`, `contact.md`) loaded at runtime
+- File-based blog with a Markdown catalogue and terminal-style post pages
 - SEO: unique `<title>`/meta description/canonical per page, Open Graph &
   Twitter cards, JSON-LD (`Person`, `WebSite`, `BreadcrumbList`),
   `robots.txt`, `sitemap.xml` and semantic HTML
@@ -90,6 +91,12 @@ Markdown files under `content/` are rendered into the terminal by
 | CV | `content/cv.md` |
 | Contact | `content/contact.md` |
 
+## Blog
+
+Blog posts are Markdown files under `content/blog/`. Add a post by creating a
+file and adding its metadata to `content/blog/index.json`. The index is
+available at `/blog`; individual posts are served through `/post?slug=...`.
+
 The **licenses page is hard-coded** in `licenses.html` (repo root) — no
 markdown, one less network request.
 
@@ -146,6 +153,7 @@ Update `lastmod` in `sitemap.xml` whenever content changes.
 ├── assets/css/site.css     # all styles (bump ?v=N when you change it)
 ├── assets/img/og-cover.png # Open Graph / Twitter share image
 ├── content/*.md            # markdown source of the content pages
+├── content/blog/            # blog catalogue and Markdown posts
 └── src/
     ├── js/config.js        # loads + applies the yaml config
     ├── js/load-md.js       # fetches + renders markdown
@@ -182,11 +190,15 @@ the old cached copy otherwise (browser + nginx cache).
 ## Releasing
 
 - `main` push and `v*` tags trigger **.github/workflows/docker.yml**,
-  which builds and pushes `ghcr.io/<owner>/fetchfolio:{latest,<version>}`
+  which builds and pushes multi-architecture (`linux/amd64`, `linux/arm64`)
+  images to `ghcr.io/<owner>/fetchfolio:{latest,<version>}`
 - [Semver](https://semver.org/) is used: breaking changes bump major,
   features minor, fixes patch
 
 ### Changelog
+
+- **2.2.0** — complete the file-based terminal blog with a catalogue, post
+  pages and safe slug resolution; include blog pages in Docker images
 
 - **2.1.0** — SEO: per-page `<title>`/meta description/canonical,
   Open Graph + Twitter cards, JSON-LD (`Person`, `WebSite`, `ProfilePage`,
