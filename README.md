@@ -20,6 +20,7 @@ HTML/CSS/JS, no build step, no frameworks.
 - Markdown content pages (`about.md`, `education.md`, `achievements.md`,
   `cv.md`, `contact.md`) loaded at runtime
 - File-based blog with a Markdown catalogue and terminal-style post pages
+- Admin GUI at `/admin.html` for creating, editing and deleting Markdown posts
 - SEO: unique `<title>`/meta description/canonical per page, Open Graph &
   Twitter cards, JSON-LD (`Person`, `WebSite`, `BreadcrumbList`),
   `robots.txt`, `sitemap.xml` and semantic HTML
@@ -96,6 +97,11 @@ Markdown files under `content/` are rendered into the terminal by
 Blog posts are Markdown files under `content/blog/`. Add a post by creating a
 file and adding its metadata to `content/blog/index.json`. The index is
 available at `/blog`; individual posts are served through `/post?slug=...`.
+
+The admin panel at `/admin.html` can create, edit and delete these posts. On
+first use, create an account with a password of at least 12 characters. Post
+content remains in `content/blog/` as Markdown; admin credentials are stored
+separately in the Docker `/data` volume.
 
 The **licenses page is hard-coded** in `licenses.html` (repo root) — no
 markdown, one less network request.
@@ -196,6 +202,9 @@ the old cached copy otherwise (browser + nginx cache).
   features minor, fixes patch
 
 ### Changelog
+
+- **2.3.0** — add a self-hosted admin GUI and authenticated API for Markdown
+  blog management; publish a single multi-architecture image for amd64/arm64
 
 - **2.2.0** — complete the file-based terminal blog with a catalogue, post
   pages and safe slug resolution; include blog pages in Docker images
