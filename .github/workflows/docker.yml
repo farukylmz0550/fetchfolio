@@ -24,6 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Crawlers read the baked-in HTML, so the pages must not drift from
+      # content/*.md — fail the build when someone forgets to re-render.
+      - name: Check prerendered content
+        run: python3 scripts/prerender.py --check
+
+      # amd64 servers *and* arm64 boxes (Oracle/VPS/home labs) — the image is
+      # published as a multi-arch manifest, so `docker pull` gets the right one.
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -53,6 +60,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

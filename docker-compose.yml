@@ -19,7 +19,8 @@ services:
     volumes:
       # Live editing: changes in this folder appear instantly on :3000
       # (shadows the Dockerfile COPY, no rebuild needed)
-      - .:/usr/share/nginx/html:ro,z
+      - .:/usr/share/nginx/html:rw,z
+      - fetchfolio-data:/data
     restart: unless-stopped
 
 volumes:

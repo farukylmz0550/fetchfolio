@@ -2,8 +2,8 @@
 // Blog metadata lives in content/blog/index.json and posts are Markdown files.
 
 function blogRoot() {
-  const script = document.currentScript && document.currentScript.src;
-  return script ? script.replace(/\/src\/js\/load-blog\.js.*$/, '/') : '../../';
+  const script = document.querySelector('script[src*="/load-blog.js"]');
+  return script ? new URL(script.getAttribute('src'), document.baseURI).href.replace(/src\/js\/load-blog\.js.*$/, '') : '/';
 }
 
 function escapeHtml(value) {
