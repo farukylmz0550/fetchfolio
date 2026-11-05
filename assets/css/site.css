@@ -170,6 +170,47 @@ body.home .terminal-body {
 .value { color: #e2e8f0; }
 .nav-row:hover .value { color: #facc15; text-decoration: underline; }
 
+/* Blog admin */
+.admin-page .terminal-body { max-width: 1100px; }
+.admin-heading, .admin-toolbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.admin-prompt { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+.admin-heading h1, .admin-toolbar h2, .admin-card h2 { margin: 0; }
+.admin-heading h1 { font-size: 24px; }
+.admin-toolbar h2, .admin-card h2 { font-size: 18px; }
+.admin-subtitle, .muted { color: #94a3b8; margin: 5px 0 0; }
+.admin-home-link { margin-top: 8px; }
+.admin-message { min-height: 22px; margin: 24px 0 10px; color: #facc15; }
+.admin-card { background: rgba(15, 23, 42, .72); border: 1px solid #334155; border-radius: 8px; padding: 22px; box-shadow: 0 12px 30px rgba(0, 0, 0, .18); }
+.admin-login-card { max-width: 470px; margin: 0 auto; }
+.card-label { color: var(--ff-accent); font-size: 11px; font-weight: bold; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 9px; }
+.admin-fields, .field { display: grid; gap: 7px; }
+.admin-fields { margin: 20px 0; }
+.admin-card label { color: #cbd5e1; font-size: 13px; }
+.admin-card input, .admin-card textarea { width: 100%; box-sizing: border-box; border: 1px solid #475569; border-radius: 5px; background: #0f172a; color: #e2e8f0; font: inherit; padding: 10px 12px; outline: none; }
+.admin-card textarea { resize: vertical; line-height: 1.55; min-height: 220px; }
+.admin-card input:focus, .admin-card textarea:focus { border-color: var(--ff-accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, .14); }
+.admin-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.admin-card button { border: 0; border-radius: 5px; background: var(--ff-accent); color: #082f49; cursor: pointer; font: inherit; font-weight: bold; padding: 10px 15px; }
+.admin-card button:hover { background: #7dd3fc; }
+.button-secondary { background: #1e293b !important; color: #cbd5e1 !important; border: 1px solid #475569 !important; }
+.button-secondary:hover { background: #334155 !important; }
+.admin-editor { margin-top: 28px; }
+.admin-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(240px, .75fr); gap: 18px; margin-top: 16px; }
+.form-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(150px, .7fr); gap: 14px; }
+.post-form { display: grid; gap: 15px; }
+.post-list { display: grid; gap: 8px; margin-top: 16px; }
+.post-list p { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid #1e293b; margin: 0; padding: 10px 0; }
+.post-list p a { color: #e2e8f0; text-decoration: none; }
+.post-list p a:hover { color: var(--ff-accent); }
+.post-list p button { padding: 6px 9px; background: transparent; border: 1px solid #7f1d1d; color: #fca5a5; font-size: 12px; }
+.post-list p button:hover { background: #450a0a; }
+
+@media (max-width: 760px) {
+  .admin-heading, .admin-toolbar { flex-direction: column; }
+  .admin-grid, .form-grid { grid-template-columns: 1fr; }
+  .admin-home-link { margin-top: 0; }
+}
+
 /* Social media boxes */
 .social-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-left: 4px; }
 .social-box {
@@ -254,6 +295,20 @@ body.home .terminal-body {
   font-weight: bold;
 }
 .back-link:hover { text-decoration: underline; color: #facc15; }
+
+/* Blog index and posts */
+.blog-list { margin-top: 8px; }
+.blog-card { border-left: 2px solid #334155; padding: 10px 14px; margin-bottom: 14px; }
+.blog-card:hover { border-left-color: var(--ff-accent); background: rgba(30, 41, 59, 0.35); }
+.blog-card h2 { margin: 2px 0 6px !important; font-size: 16px !important; }
+.blog-card h2::before { content: none !important; }
+.blog-card h2 a { color: #e2e8f0; text-decoration: none; }
+.blog-card h2 a:hover { color: var(--ff-accent); }
+.blog-meta { color: #64748b; font-size: 12px; }
+.blog-card p { margin-bottom: 7px !important; }
+.blog-read { color: var(--ff-accent); font-size: 12px; text-decoration: none; }
+.blog-read:hover { color: #facc15; text-decoration: underline; }
+.blog-empty { color: #64748b; }
 
 /* Signature line on the licenses page */
 .made-by { margin-top: 24px; }

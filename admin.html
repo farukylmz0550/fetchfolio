@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FetchFolio Admin</title>
+  <link rel="stylesheet" href="assets/css/site.css?v=7">
+</head>
+<body class="page admin-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <div class="terminal-dot dot-red"></div>
+      <div class="terminal-dot dot-yellow"></div>
+      <div class="terminal-dot dot-green"></div>
+      <span class="terminal-title">fetchfolio:~/admin</span>
+    </div>
+
+    <main class="terminal-body" id="main">
+      <div class="admin-heading">
+        <div>
+          <div class="admin-prompt"><span class="prompt">$</span> ./blog-admin</div>
+          <h1>Blog admin</h1>
+          <p class="admin-subtitle">Create and manage terminal-native posts.</p>
+        </div>
+        <a class="back-link admin-home-link" href="index.html">&lt; cd ~</a>
+      </div>
+
+      <p id="message" class="admin-message" role="status"></p>
+
+      <section id="login" class="admin-card admin-login-card">
+        <div class="card-label">authentication</div>
+        <h2>Sign in to continue</h2>
+        <p class="muted">Use your FetchFolio admin credentials.</p>
+        <div class="admin-fields">
+          <label for="username">Username</label>
+          <input id="username" autocomplete="username" placeholder="admin">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" placeholder="••••••••••••">
+        </div>
+        <div class="admin-actions">
+          <button onclick="login()">Login</button>
+          <button class="button-secondary" onclick="setup()">First-time setup</button>
+        </div>
+      </section>
+
+      <section id="editor" class="admin-editor" hidden>
+        <div class="admin-toolbar">
+          <div>
+            <div class="card-label">content workspace</div>
+            <h2>Manage posts</h2>
+          </div>
+          <button class="button-secondary" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="admin-grid">
+          <form class="admin-card post-form" onsubmit="savePost(); return false;">
+            <div class="card-label">markdown editor</div>
+            <h2>Post details</h2>
+            <div class="form-grid">
+              <div class="field field-slug">
+                <label for="slug">Slug</label>
+                <input id="slug" pattern="[a-z0-9][a-z0-9-]{1,79}" placeholder="my-first-post" required>
+              </div>
+              <div class="field">
+                <label for="date">Date</label>
+                <input id="date" type="date">
+              </div>
+            </div>
+            <div class="field">
+              <label for="title">Title</label>
+              <input id="title" placeholder="Post title" required>
+            </div>
+            <div class="field">
+              <label for="excerpt">Excerpt</label>
+              <input id="excerpt" placeholder="A short description for the blog index">
+            </div>
+            <div class="field">
+              <label for="markdown">Markdown</label>
+              <textarea id="markdown" rows="16" placeholder="# Your post\n\nWrite something useful..."></textarea>
+            </div>
+            <button type="submit">Save post</button>
+          </form>
+
+          <aside class="admin-card post-list-card">
+            <div class="card-label">content/blog</div>
+            <h2>Published posts</h2>
+            <div id="posts" class="post-list"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="src/js/admin.js?v=1"></script>
+</body>
+</html>

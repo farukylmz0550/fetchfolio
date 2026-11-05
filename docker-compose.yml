@@ -1,13 +1,26 @@
 # FetchFolio — compose for local development / self-hosting
 # Build: docker compose up --build   →  http://localhost:3000
 services:
+  backend:
+    image: python:3.13-alpine
+    command: python /app/server.py
+    working_dir: /app
+    volumes:
+      - .:/app
+      - fetchfolio-data:/data
+    restart: unless-stopped
   fetchfolio:
     build: .
     image: fetchfolio:latest
     ports:
       - "3000:80"
+    depends_on:
+      - backend
     volumes:
       # Live editing: changes in this folder appear instantly on :3000
       # (shadows the Dockerfile COPY, no rebuild needed)
       - .:/usr/share/nginx/html:ro,z
     restart: unless-stopped
+
+volumes:
+  fetchfolio-data:
