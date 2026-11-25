@@ -243,8 +243,8 @@ the old cached copy otherwise (browser + nginx cache).
 - `main` push and `v*` tags trigger **.github/workflows/docker.yml**,
   which builds and pushes multi-architecture (`linux/amd64`, `linux/arm64`)
   images to `ghcr.io/<owner>/fetchfolio:{latest,<version>}`
-- The 3.0.0 GitHub Release includes `fetchfolio-wordpress-theme-3.0.0.zip`,
-  which can be uploaded directly in the WordPress dashboard.
+- Version tags also create a GitHub Release and attach
+  `fetchfolio-wordpress-theme-<version>.zip`, ready to upload in WordPress.
 - [Semver](https://semver.org/) is used: breaking changes bump major,
   features minor, fixes patch
 
