@@ -1,0 +1,60 @@
+{
+  "pages": [
+    {
+      "slug": "about",
+      "title": "About Me",
+      "description": "Developer, Linux & Systems Enthusiast",
+      "content": "<h1>About Me</h1>\n<p>&lt;!-- Introduce yourself in words. Who you are, what you do, what you love. --&gt;</p>\n<p>[write about yourself here]</p>\n<p>&lt;!-- What OS/tools do you use? --&gt;</p>\n<p>[your operating system and tools]</p>\n<p>&lt;!-- Hobbies or side interests --&gt;</p>\n<p>[your hobbies]</p>\n<p>&lt;!-- Self-hosted services you run --&gt;</p>\n<p>[your self-hosted services]</p>\n"
+    },
+    {
+      "slug": "education",
+      "title": "Education",
+      "description": "School History & Studies",
+      "content": "<h1>Education</h1>\n<h2>University</h2>\n<p>[your university info]</p>\n<h2>Online Courses &amp; Certificates</h2>\n<ul>\n<li>[course name - platform]</li>\n<li>[course name - platform]</li>\n</ul>\n<h2>Self-Learning</h2>\n<p>[your self-learning description]</p>\n"
+    },
+    {
+      "slug": "achievements",
+      "title": "Achievements",
+      "description": "Projects, Modding & 3D Designs",
+      "content": "<h1>Achievements</h1>\n<ul>\n<li>[achievement 1]</li>\n<li>[achievement 2]</li>\n<li>[achievement 3]</li>\n</ul>\n"
+    },
+    {
+      "slug": "cv",
+      "title": "CV / Resume",
+      "description": "Resume & Skills",
+      "content": "<h1>CV / Resume</h1>\n<h2>Work Experience</h2>\n<ul>\n<li>[your work experience]</li>\n</ul>\n<h2>Technical Skills</h2>\n<p><strong>Operating Systems</strong> : [os list]</p>\n<p><strong>Tools &amp; Technologies</strong> : [tools]</p>\n<p><strong>Programming Languages</strong> : [languages]</p>\n<p><strong>Other</strong> : [other skills]</p>\n<h2>Certificates</h2>\n<ul>\n<li>[certificate 1]</li>\n</ul>\n"
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "description": "Email, GitHub & Social Media",
+      "content": "<h1>Contact</h1>\n<p><strong>Email</strong> : [<a href=\"mailto:example@email.com\">example@email.com</a>]</p>\n<p><strong>GitHub</strong> : [github.com/username]</p>\n<p><strong>YouTube</strong> : [youtube.com/@username]</p>\n"
+    },
+    {
+      "slug": "licenses",
+      "title": "Licenses & Credits",
+      "description": "Software and icon licenses, with required attribution.",
+      "content": "<h1>Technologies &amp; Licenses</h1>\n<p>FetchFolio's original theme code and content are distributed under the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License v3.0</a>. The repository includes the full license text.</p>\n<h2>WordPress</h2>\n<p>This theme runs on WordPress and uses its PHP theme APIs, editor, and database-backed pages and posts. WordPress itself is licensed under <a href=\"https://wordpress.org/about/license/\">GPL version 2 or later</a>. WordPress is installed separately and is not bundled in this theme directory.</p>\n<h2>Icons</h2>\n<h3>GitHub, YouTube, and Discord</h3>\n<p>These brand marks are adapted from <a href=\"https://github.com/simple-icons/simple-icons\">Simple Icons</a>. The Simple Icons project is released under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>. Brand names and logos remain the property of their respective owners; their use here does not imply endorsement.</p>\n<h3>LinkedIn</h3>\n<p>The LinkedIn SVG is from Font Awesome Free 6.5.2 by Fonticons, Inc. It is used under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>. Attribution: <strong>LinkedIn icon by Fonticons, Inc. (Font Awesome Free 6.5.2).</strong></p>\n<h3>MakerWorld and License</h3>\n<p>These two small SVGs are original FetchFolio artwork. MakerWorld is a trademark of its respective owner.</p>\n<h2>Other components</h2>\n<p>The theme uses the browser's built-in HTML, CSS, and JavaScript support and WordPress core APIs. It does not bundle the static version's <code>marked.js</code> or <code>js-yaml</code> libraries. The theme's monospace text uses fonts already available on the visitor's system; no font files are bundled.</p>\n<h2>Optional plugins</h2>\n<p>The preview environment uses <a href=\"https://wordpress.org/plugins/wp-consent-api/\">WP Consent API</a> and <a href=\"https://wordpress.org/plugins/wp-statistics/\">WP Statistics</a>. Neither plugin is bundled with the FetchFolio theme ZIP. Each plugin retains its own license and notices; consult its WordPress.org listing and installed package for details.</p>\n"
+    }
+  ],
+  "posts": [
+    {
+      "slug": "welcome-to-the-blog",
+      "title": "Welcome to the FetchFolio blog",
+      "date": "2026-11-05",
+      "excerpt": "A terminal-native space for notes, guides and project updates.",
+      "content": "<p>FetchFolio now has a small, file-based blog for development notes, guides and\nproject updates.</p>\n<h2>How it works</h2>\n<p>Each post is a Markdown file under <code>content/blog/</code>. The <code>index.json</code> file is\nthe catalogue used by the blog index, so adding a post only requires a new\nMarkdown file and one catalogue entry.</p>\n<p>This keeps the site fast, portable and easy to edit: there is no database,\nbuild pipeline or admin panel to maintain.</p>\n<blockquote>\n<p>New posts can be published by committing the Markdown file and its catalogue\nentry.</p>\n</blockquote>\n"
+    }
+  ],
+  "settings": {
+    "user": "user",
+    "host": "hostname",
+    "accent": "#38bdf8",
+    "ascii": "",
+    "github": "",
+    "youtube": "",
+    "makerworld": "",
+    "linkedin": "",
+    "discord": ""
+  }
+}

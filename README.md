@@ -1,8 +1,9 @@
 # fetchfolio
 
-A personal portfolio website that looks like a terminal. **neofetch**-style home
-page, `$ cat about.md` content pages, and a blinking cursor — all vanilla
-HTML/CSS/JS, no build step, no frameworks.
+A personal portfolio website that looks like a terminal. FetchFolio is
+available as a static Docker site and as an editable WordPress theme. Both
+editions share the neofetch-style home page, `$ cat about.md` content pages,
+and terminal-inspired visual design.
 
 ## Screenshots
 
@@ -29,6 +30,8 @@ HTML/CSS/JS, no build step, no frameworks.
 - Terminal-themed 404 page (`cat missing-file.md`)
 - `Made by` signature with a GitHub profile link on the licenses page
 - Docker deployment (nginx:1.27-alpine frontend + a small Python backend)
+- WordPress theme with editable pages and posts, dark/light appearance,
+  privacy choices, and an installable ZIP in GitHub Releases
 - GitHub Actions workflow that publishes images to ghcr.io on every push
   and on version tags
 
@@ -46,14 +49,50 @@ This starts the static site only. The blog remains fully readable, but the
 admin API is not available through `http.server`. To run the complete stack
 with blog management, use Docker Compose as described below.
 
-## Configuration
+## WordPress theme
 
-Everything lives in ONE file: **`fetchfolio.config.yaml`** (always at the
+The classic FetchFolio theme is in `wordpress-theme/fetchfolio`. Download
+`fetchfolio-wordpress-theme-3.0.0.zip` from the 3.0.0 GitHub Release, then in
+WordPress open **Appearance → Themes → Add New → Upload Theme**, select the ZIP,
+install it, and activate **FetchFolio**. You can also ZIP the `fetchfolio`
+directory yourself.
+
+On first activation, the theme creates editable starter pages, a home page, a
+blog page, a section menu, and the repository's welcome post. The import runs
+once and does not overwrite later edits. Manage page content in **Pages** and
+publish articles in **Posts**. The WordPress dashboard replaces the static
+edition's `/admin.html` and Python blog API; `/admin` is a shortcut to the
+WordPress login or dashboard.
+
+Set the terminal user and host, accent color, ASCII art, and profile links in
+**Appearance → Customize → FetchFolio terminal**. Theme appearance choices are
+saved in the visitor's browser. The privacy panel offers **Accept all**,
+**Reject optional**, and **Accept necessary only**. Its statistics choice is
+sent through WP Consent API; WP Statistics can use it when the API is active
+and its consent integration is enabled in **Statistics → Settings → Privacy &
+Data Protection → User Preferences**. WordPress, WP Consent API, and WP
+Statistics are installed separately and are not bundled in the theme ZIP.
+
+The WordPress preview setup is in `wordpress-theme/preview`. Its editor test
+post is development-only and is excluded from the release starter content. To
+include that post in a local development starter-content file, run:
+
+```bash
+python3 wordpress-theme/preview/build-starter-content.py --include-preview-post
+```
+
+The release ZIP contains only the theme folder, not the preview Compose files
+or the development test post. WordPress and theme license notes are in
+`wordpress-theme/preview/licenses-wordpress.md`.
+
+## Static-site configuration
+
+For the static edition, everything lives in ONE file: **`fetchfolio.config.yaml`** (always at the
 site root; **`config.js` locates it from any page under any subdirectory**).
 
 ```yaml
 site:
-  version: "1.0.0"
+  version: "3.0.0"
   user: "user"       # user@host in the header and terminal title bar
   host: "hostname"
 
@@ -163,6 +202,9 @@ Update `lastmod` in `sitemap.xml` whenever content changes.
 ├── assets/img/og-cover.png # Open Graph / Twitter share image
 ├── content/*.md            # markdown source of the content pages
 ├── content/blog/            # blog catalogue and Markdown posts
+├── wordpress-theme/
+│   ├── fetchfolio/          # installable WordPress theme
+│   └── preview/             # isolated WordPress development stack
 └── src/
     ├── js/config.js        # loads + applies the yaml config
     ├── js/load-md.js       # fetches + renders markdown
@@ -201,10 +243,18 @@ the old cached copy otherwise (browser + nginx cache).
 - `main` push and `v*` tags trigger **.github/workflows/docker.yml**,
   which builds and pushes multi-architecture (`linux/amd64`, `linux/arm64`)
   images to `ghcr.io/<owner>/fetchfolio:{latest,<version>}`
+- The 3.0.0 GitHub Release includes `fetchfolio-wordpress-theme-3.0.0.zip`,
+  which can be uploaded directly in the WordPress dashboard.
 - [Semver](https://semver.org/) is used: breaking changes bump major,
   features minor, fixes patch
 
 ### Changelog
+
+- **3.0.0** — add an installable WordPress theme with editable pages and blog
+  posts, a theme customizer, dark/light mode, and an unobtrusive optional
+  statistics consent panel integrated with WP Consent API. Add the theme ZIP
+  to the release. Keep the WordPress preview test post out of release starter
+  content. The static Docker edition remains available.
 
 - **2.3.0** — add a self-hosted admin GUI and authenticated API for Markdown
   blog management; publish a single multi-architecture image for amd64/arm64
