@@ -4,6 +4,22 @@
   var consentKey = 'fetchfolio-consent';
   var root = document.documentElement;
 
+  function readConsent() {
+    var saved = null;
+    try { saved = localStorage.getItem(consentKey); } catch (e) {}
+    if (saved === 'accept' || saved === 'reject' || saved === 'necessary') return saved;
+    var match = document.cookie.match(new RegExp('(?:^|; )' + consentKey + '=([^;]*)'));
+    if (!match) return null;
+    try { saved = decodeURIComponent(match[1]); } catch (e) { saved = match[1]; }
+    return saved === 'accept' || saved === 'reject' || saved === 'necessary' ? saved : null;
+  }
+
+  function storeConsent(choice) {
+    try { localStorage.setItem(consentKey, choice); } catch (e) {}
+    var secure = window.location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = consentKey + '=' + encodeURIComponent(choice) + '; Max-Age=31536000; Path=/; SameSite=Lax' + secure;
+  }
+
   function setTheme(theme, save) {
     root.dataset.theme = theme;
     var button = document.querySelector('[data-ff-theme-toggle]');
@@ -30,28 +46,18 @@
 
   function initConsent() {
     var banner = document.querySelector('[data-ff-consent-banner]');
-    var settings = document.querySelector('[data-ff-consent-open]');
     if (!banner) return;
-    var saved = null;
-    try { saved = localStorage.getItem(consentKey); } catch (e) {}
-
-    function showSettings() {
-      banner.hidden = false;
-      if (settings) settings.hidden = true;
-      var first = banner.querySelector('[data-ff-consent]');
-      if (first) first.focus();
-    }
+    var saved = readConsent();
     function saveChoice(choice) {
-      try { localStorage.setItem(consentKey, choice); } catch (e) {}
+      if (choice !== 'accept' && choice !== 'reject' && choice !== 'necessary') return;
+      storeConsent(choice);
       applyStatisticsConsent(choice);
       banner.hidden = true;
-      if (settings) settings.hidden = false;
     }
 
     if (saved === 'accept' || saved === 'reject' || saved === 'necessary') {
       applyStatisticsConsent(saved);
       banner.hidden = true;
-      if (settings) settings.hidden = false;
     } else {
       banner.hidden = false;
     }
@@ -59,7 +65,6 @@
       var choice = event.target.closest('[data-ff-consent]');
       if (choice) saveChoice(choice.dataset.ffConsent);
     });
-    if (settings) settings.addEventListener('click', showSettings);
   }
 
   document.addEventListener('click', function (event) {

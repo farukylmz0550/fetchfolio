@@ -3,7 +3,7 @@
     {
       "slug": "about",
       "title": "About Me",
-      "description": "Developer, Linux & Systems Enthusiast",
+      "description": "Personal Introduction",
       "content": "<h1>About Me</h1>\n<p>&lt;!-- Introduce yourself in words. Who you are, what you do, what you love. --&gt;</p>\n<p>[write about yourself here]</p>\n<p>&lt;!-- What OS/tools do you use? --&gt;</p>\n<p>[your operating system and tools]</p>\n<p>&lt;!-- Hobbies or side interests --&gt;</p>\n<p>[your hobbies]</p>\n<p>&lt;!-- Self-hosted services you run --&gt;</p>\n<p>[your self-hosted services]</p>\n"
     },
     {
@@ -15,7 +15,7 @@
     {
       "slug": "achievements",
       "title": "Achievements",
-      "description": "Projects, Modding & 3D Designs",
+      "description": "Projects & Achievements",
       "content": "<h1>Achievements</h1>\n<ul>\n<li>[achievement 1]</li>\n<li>[achievement 2]</li>\n<li>[achievement 3]</li>\n</ul>\n"
     },
     {
@@ -27,7 +27,7 @@
     {
       "slug": "contact",
       "title": "Contact",
-      "description": "Email, GitHub & Social Media",
+      "description": "Email & Social Media",
       "content": "<h1>Contact</h1>\n<p><strong>Email</strong> : [<a href=\"mailto:example@email.com\">example@email.com</a>]</p>\n<p><strong>GitHub</strong> : [github.com/username]</p>\n<p><strong>YouTube</strong> : [youtube.com/@username]</p>\n"
     },
     {
@@ -39,16 +39,23 @@
   ],
   "posts": [
     {
-      "slug": "welcome-to-the-blog",
-      "title": "Welcome to the FetchFolio blog",
-      "date": "2026-11-05",
-      "excerpt": "A terminal-native space for notes, guides and project updates.",
-      "content": "<p>FetchFolio now has a small, file-based blog for development notes, guides and\nproject updates.</p>\n<h2>How it works</h2>\n<p>Each post is a Markdown file under <code>content/blog/</code>. The <code>index.json</code> file is\nthe catalogue used by the blog index, so adding a post only requires a new\nMarkdown file and one catalogue entry.</p>\n<p>This keeps the site fast, portable and easy to edit: there is no database,\nbuild pipeline or admin panel to maintain.</p>\n<blockquote>\n<p>New posts can be published by committing the Markdown file and its catalogue\nentry.</p>\n</blockquote>\n"
+      "slug": "why-i-use-fedora",
+      "title": "[Your Blog Post Title]",
+      "date": "2026-01-01",
+      "excerpt": "[Add a short summary of your post.]",
+      "content": "<h2>[Section heading]</h2>\n<p>[Write your blog post here.]</p>\n"
+    },
+    {
+      "slug": "second-placeholder-post",
+      "title": "[Your Second Blog Post Title]",
+      "date": "2026-01-02",
+      "excerpt": "[Add a short summary of your second post.]",
+      "content": "<h2>[Section heading]</h2>\n<p>[Write your blog post here.]</p>\n"
     }
   ],
   "settings": {
-    "user": "user",
-    "host": "hostname",
+    "user": "fetch",
+    "host": "folio",
     "accent": "#38bdf8",
     "ascii": "",
     "github": "",

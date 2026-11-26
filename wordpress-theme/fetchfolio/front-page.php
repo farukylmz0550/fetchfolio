@@ -6,7 +6,7 @@
   ?>
   <div class="ascii-art" aria-hidden="true"><?php echo esc_html($ascii); ?></div>
   <div class="fetch-info">
-    <h1><span class="user-host"><?php echo esc_html(get_theme_mod('fetchfolio_user', 'user')); ?></span>@<span class="user-host"><?php echo esc_html(get_theme_mod('fetchfolio_host', 'hostname')); ?></span></h1>
+    <h1><span class="user-host"><?php echo esc_html(get_theme_mod('fetchfolio_user', 'fetch')); ?></span>@<span class="user-host"><?php echo esc_html(get_theme_mod('fetchfolio_host', 'folio')); ?></span></h1>
     <div class="separator">-------------------------------------</div>
     <nav aria-label="<?php esc_attr_e('Sections', 'fetchfolio'); ?>">
       <?php if (has_nav_menu('primary')) : ?>

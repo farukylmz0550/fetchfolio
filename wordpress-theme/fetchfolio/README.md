@@ -1,7 +1,7 @@
 # FetchFolio WordPress theme
 
 FetchFolio is a classic PHP theme that brings the terminal-style portfolio to
-WordPress. The original static site remains in the repository root.
+WordPress. WordPress is the supported edition.
 
 ## Install
 
@@ -20,18 +20,18 @@ WordPress dashboard. The import runs only once, so it will not overwrite later
 edits when the theme is switched again.
 
 Set terminal user, host, accent color, ASCII art, and profile links in
-**Appearance → Customize → FetchFolio terminal**. Social links stay visible
-with their network homepage when a profile URL is left blank.
+**Appearance → Customize → FetchFolio terminal**. Set homepage descriptions
+and section order in **Appearance → Homepage Settings**. Social links stay
+visible with their network homepage when a profile URL is left blank.
 
 Posts use WordPress's regular editor and automatically appear in the blog list.
 The `wordpress-theme/preview` directory includes a Docker Compose setup for a
-local development preview and a separate sample post for checking the editor.
-The sample post is not included in the release starter content. Generate
-preview starter content with it using:
+local development preview.
 
-```bash
-python3 wordpress-theme/preview/build-starter-content.py --include-preview-post
-```
+Published pages and posts also have a Markdown companion at the same URL with
+`.md` appended (for example, `/about.md`). HTML pages advertise this format
+with an alternate link. Markdown responses are generated from the current
+WordPress content and are marked `noindex` to avoid duplicate search results.
 
 WordPress's CMS runtime is PHP, so the theme uses the native WordPress PHP API;
 it does not introduce a parallel backend service.
@@ -44,6 +44,13 @@ category through WP Consent API. For WP Statistics to honor the choice, install
 and activate WP Consent API, then select that integration in **Statistics →
 Settings → Privacy & Data Protection → User Preferences**. WP Consent API and
 WP Statistics are optional plugins and are not included in the theme ZIP.
+
+## Crawler policy
+
+The theme generates `robots.txt` and `/ai.txt` from WordPress. Search engine
+crawlers and visitor-requested AI fetchers can read public content. Automated
+AI training and bulk collection crawlers are disallowed. WordPress login and
+dashboard routes remain protected by WordPress authentication and permissions.
 
 ## Release package
 

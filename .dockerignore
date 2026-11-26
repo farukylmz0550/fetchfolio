@@ -1,7 +1,0 @@
-.git
-.github
-Dockerfile
-docker-compose.yml
-.dockerignore
-*.md
-!content/**/*.md

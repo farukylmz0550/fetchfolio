@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <main class="terminal-body" id="main">
-  <div><span class="prompt">$</span> <span class="cmd">ls blog/</span><span class="cursor"></span></div>
+  <div><span class="prompt">$</span> <span class="cmd">ls blogs/</span><span class="cursor"></span></div>
   <div class="blog-list">
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
       <article class="blog-card">
