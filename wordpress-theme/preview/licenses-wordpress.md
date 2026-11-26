@@ -22,7 +22,7 @@ These two small SVGs are original FetchFolio artwork. MakerWorld is a trademark 
 
 ## Other components
 
-The theme uses the browser's built-in HTML, CSS, and JavaScript support and WordPress core APIs. It does not bundle the static version's `marked.js` or `js-yaml` libraries. The theme's monospace text uses fonts already available on the visitor's system; no font files are bundled.
+The theme uses browser HTML, CSS, and JavaScript support and WordPress core APIs. Its monospace text uses fonts already available on the visitor's system; no font files are bundled.
 
 ## Optional plugins
 

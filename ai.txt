@@ -1,0 +1,8 @@
+# FetchFolio AI access policy
+
+Search engine crawlers may index public pages. AI assistants may fetch pages
+only through user-initiated fetch/search agents. Automated AI training and
+bulk data-collection crawlers are disallowed. See /robots.txt for the current
+provider-specific crawler list.
+
+WordPress administration and login pages are private and require authorization.

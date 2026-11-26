@@ -1,8 +1,65 @@
-# fetchfolio — https://example.com/robots.txt
+# Search indexing is allowed; keep WordPress administration out of crawls.
 User-agent: *
 Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /admin/
 
-# The terminal 404 page must never show up in search results.
-Disallow: /404.html
+# Allow AI search and user-initiated page fetches; block model-training crawlers.
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /*.md$
 
-Sitemap: https://example.com/sitemap.xml
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+Allow: /*.md$
+
+User-agent: Claude-SearchBot
+Allow: /
+Allow: /*.md$
+
+User-agent: Perplexity-User
+Allow: /
+Allow: /*.md$
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+Allow: /*.md$
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: GLMBot
+Disallow: /
+
+User-agent: DeepSeekBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: __usage_ai-training
+Disallow: /
+
+Sitemap: https://example.com/wp-sitemap.xml

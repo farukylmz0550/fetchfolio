@@ -14,10 +14,94 @@ function fetchfolio_setup() {
 }
 add_action('after_setup_theme', 'fetchfolio_setup');
 
+/** Route public content's .md companion URL to a plain-text Markdown response. */
+function fetchfolio_markdown_rewrite() {
+    add_rewrite_rule('^(.+)\\.md/?$', 'index.php?fetchfolio_markdown=$matches[1]', 'top');
+}
+add_action('init', 'fetchfolio_markdown_rewrite');
+add_action('after_switch_theme', function () {
+    fetchfolio_markdown_rewrite();
+    flush_rewrite_rules(false);
+});
+
+function fetchfolio_markdown_alternate() {
+    if (is_singular()) {
+        printf('<link rel="alternate" type="text/markdown" href="%s">' . "\n", esc_url(untrailingslashit(get_permalink()) . '.md'));
+    }
+}
+add_action('wp_head', 'fetchfolio_markdown_alternate', 2);
+
+function fetchfolio_markdown_query_var($vars) {
+    $vars[] = 'fetchfolio_markdown';
+    return $vars;
+}
+add_filter('query_vars', 'fetchfolio_markdown_query_var');
+
+function fetchfolio_html_to_markdown($html, $heading_offset = 0) {
+    if (!class_exists('DOMDocument')) return trim(wp_strip_all_tags($html));
+    $previous = libxml_use_internal_errors(true);
+    $document = new DOMDocument('1.0', 'UTF-8');
+    $document->loadHTML('<?xml encoding="UTF-8"><div>' . $html . '</div>', LIBXML_NONET | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+    libxml_use_internal_errors($previous);
+    $convert = function ($node) use (&$convert, $heading_offset) {
+        if ($node->nodeType === XML_TEXT_NODE) return $node->nodeValue;
+        if ($node->nodeType !== XML_ELEMENT_NODE) return '';
+        $tag = strtolower($node->nodeName);
+        $inner = '';
+        foreach ($node->childNodes as $child) $inner .= $convert($child);
+        $inner = trim($inner);
+        switch ($tag) {
+            case 'h1': case 'h2': case 'h3': case 'h4': case 'h5': case 'h6':
+                $level = max(2, min(6, (int) substr($tag, 1) + $heading_offset));
+                return "\n\n" . str_repeat('#', $level) . ' ' . $inner . "\n\n";
+            case 'p': case 'div': return $inner === '' ? '' : "\n\n" . $inner . "\n\n";
+            case 'br': return "  \n";
+            case 'strong': case 'b': return '**' . $inner . '**';
+            case 'em': case 'i': return '*' . $inner . '*';
+            case 'code': return '`' . $inner . '`';
+            case 'pre': return "\n\n```\n" . trim($node->textContent) . "\n```\n\n";
+            case 'a': $href = $node->getAttribute('href'); return $href ? '[' . $inner . '](' . $href . ')' : $inner;
+            case 'li': return '- ' . $inner . "\n";
+            case 'ul': case 'ol': return "\n" . $inner . "\n";
+            case 'blockquote': return "\n\n> " . str_replace("\n", "\n> ", $inner) . "\n\n";
+            case 'hr': return "\n\n---\n\n";
+            case 'img': $alt = $node->getAttribute('alt'); $src = $node->getAttribute('src'); return $src ? '![' . $alt . '](' . $src . ')' : '';
+            default: return $inner;
+        }
+    };
+    $markdown = '';
+    foreach ($document->documentElement->childNodes as $child) $markdown .= $convert($child);
+    $markdown = preg_replace("/\\n{3,}/", "\n\n", $markdown);
+    return trim(html_entity_decode($markdown, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+}
+
+function fetchfolio_serve_markdown() {
+    $requested_path = get_query_var('fetchfolio_markdown');
+    if (!$requested_path) return;
+    $post = get_page_by_path(sanitize_text_field($requested_path), OBJECT, array('page', 'post'));
+    if (!$post || $post->post_status !== 'publish' || !is_post_publicly_viewable($post)) {
+        status_header(404);
+        header('Content-Type: text/plain; charset=UTF-8');
+        echo "Not found\n";
+        exit;
+    }
+    status_header(200);
+    header('Content-Type: text/markdown; charset=UTF-8');
+    header('X-Robots-Tag: noindex, follow');
+    header('Link: <' . esc_url_raw(get_permalink($post)) . '>; rel=canonical');
+    $body = apply_filters('the_content', $post->post_content);
+    // The post title is the document H1. Keep body H2/H3 headings at their
+    // authored levels and promote any body H1 to H2 under the document title.
+    echo '# ' . wp_strip_all_tags(get_the_title($post)) . "\n\n" . fetchfolio_html_to_markdown($body) . "\n";
+    exit;
+}
+add_action('template_redirect', 'fetchfolio_serve_markdown', 0);
+
 function fetchfolio_assets() {
-    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.0.0');
-    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.0.0');
-    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.0.0', true);
+    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.1.0');
+    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.1.0');
+    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.1.0', true);
     $accent = sanitize_hex_color(get_theme_mod('fetchfolio_accent', '#38bdf8'));
     if ($accent) {
         wp_add_inline_style('fetchfolio-theme', ':root{--ff-user-accent:' . $accent . '}');
