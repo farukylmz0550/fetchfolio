@@ -10,15 +10,13 @@ $host = get_theme_mod('fetchfolio_host', 'hostname');
 <script>
 try {
   var ffSavedTheme = localStorage.getItem('fetchfolio-theme');
-  document.documentElement.dataset.theme = ffSavedTheme === 'light' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = ffSavedTheme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
 } catch (e) { document.documentElement.dataset.theme = 'dark'; }
 window.wp_consent_type = 'optin';
 document.addEventListener('DOMContentLoaded', function () {
   document.dispatchEvent(new CustomEvent('wp_consent_type_defined'));
 });
 </script>
-<meta name="color-scheme" content="dark light">
-<meta name="theme-color" content="#0c0c0d" data-ff-theme-color>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(is_front_page() ? 'home' : 'page'); ?>>

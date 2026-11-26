@@ -1,7 +1,7 @@
 # FetchFolio WordPress theme
 
 FetchFolio is a classic PHP theme that brings the terminal-style portfolio to
-WordPress. WordPress is the supported edition.
+WordPress. The original static site remains in the repository root.
 
 ## Install
 
@@ -25,12 +25,13 @@ with their network homepage when a profile URL is left blank.
 
 Posts use WordPress's regular editor and automatically appear in the blog list.
 The `wordpress-theme/preview` directory includes a Docker Compose setup for a
-local development preview.
+local development preview and a separate sample post for checking the editor.
+The sample post is not included in the release starter content. Generate
+preview starter content with it using:
 
-Published pages and posts also have a Markdown companion at the same URL with
-`.md` appended (for example, `/about.md`). HTML pages advertise this format
-with an alternate link. Markdown responses are generated from the current
-WordPress content and are marked `noindex` to avoid duplicate search results.
+```bash
+python3 wordpress-theme/preview/build-starter-content.py --include-preview-post
+```
 
 WordPress's CMS runtime is PHP, so the theme uses the native WordPress PHP API;
 it does not introduce a parallel backend service.

@@ -1,0 +1,85 @@
+# FetchFolio — Builds the Docker image and publishes it to ghcr.io
+# Push to main → ghcr.io/<owner>/fetchfolio:latest (github.repository decides)
+# Version tags like v3.0.0 → ghcr.io/<owner>/fetchfolio:3.0.0
+name: Docker
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Crawlers read the baked-in HTML, so the pages must not drift from
+      # content/*.md — fail the build when someone forgets to re-render.
+      - name: Check prerendered content
+        run: python3 scripts/prerender.py --check
+
+      # amd64 servers *and* arm64 boxes (Oracle/VPS/home labs) — the image is
+      # published as a multi-arch manifest, so `docker pull` gets the right one.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta (tags)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=sha
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Get release version
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: release-version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Package WordPress theme
+        if: startsWith(github.ref, 'refs/tags/v')
+        working-directory: wordpress-theme
+        env:
+          RELEASE_VERSION: ${{ steps.release-version.outputs.version }}
+        run: zip -qr "$RUNNER_TEMP/fetchfolio-wordpress-theme-${RELEASE_VERSION}.zip" fetchfolio
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: ${{ runner.temp }}/fetchfolio-wordpress-theme-${{ steps.release-version.outputs.version }}.zip

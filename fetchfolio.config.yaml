@@ -1,0 +1,26 @@
+# fetchfolio - Site configuration
+# Edit this file to customize the site.
+
+site:
+  version: "3.0.0"
+  user: "user"
+  host: "hostname"
+
+theme:
+  accent_color: "#38bdf8"
+
+# Multiline ASCII art shown on the home page. Use the |- block form and
+# keep the leading spaces of each art line. Leave empty ("") to keep the
+# template art from index.html as-is.
+ascii_art: ""
+
+# Social media links.
+# Every box is always visible on the home page: leaving a network empty
+# uses that site's homepage, entering a URL points the box there instead.
+# Boxes: github, youtube, makerworld, linkedin, discord
+social:
+  github: ""
+  youtube: ""
+  makerworld: ""
+  linkedin: ""
+  discord: ""

@@ -6,8 +6,6 @@
 
   function setTheme(theme, save) {
     root.dataset.theme = theme;
-    var themeColor = document.querySelector('[data-ff-theme-color]');
-    if (themeColor) themeColor.setAttribute('content', theme === 'light' ? '#f1f3f5' : '#0c0c0d');
     var button = document.querySelector('[data-ff-theme-toggle]');
     if (!button) return;
     var light = theme === 'light';

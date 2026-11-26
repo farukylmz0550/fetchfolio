@@ -18,18 +18,18 @@
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --ff-bg: #f1f3f5;
-  --ff-panel: #ffffff;
-  --ff-bar: #e2e8f0;
-  --ff-border: #aab4c0;
-  --ff-text: #17212b;
-  --ff-soft: #334155;
-  --ff-muted: #526170;
-  --ff-hover: #e8eef5;
-  --ff-field: #ffffff;
-  --ff-accent: #075e7d;
+  --ff-bg: #e6e8df;
+  --ff-panel: #fbfaf3;
+  --ff-bar: #dce5dc;
+  --ff-border: #c1ccc2;
+  --ff-text: #1d2d29;
+  --ff-soft: #3b4d47;
+  --ff-muted: #586a62;
+  --ff-hover: #e2eee6;
+  --ff-field: #fffef9;
+  --ff-accent: #0f766e;
   --ff-warm: #8a5700;
-  --ff-shadow: 0 24px 68px rgba(35, 50, 65, .16), 0 4px 14px rgba(35, 50, 65, .08);
+  --ff-shadow: 0 24px 68px rgba(35, 50, 40, .2), 0 4px 14px rgba(35, 50, 40, .08);
 }
 
 @supports (color: color-mix(in srgb, #000, #fff)) {
@@ -181,11 +181,6 @@ body.home .terminal-body {
 .terminal-body::-webkit-scrollbar-track { background: var(--ff-bg); }
 .terminal-body::-webkit-scrollbar-thumb { background: var(--ff-border); border-radius: 3px; }
 .terminal-body::-webkit-scrollbar-thumb:hover { background: var(--ff-accent); }
-
-.post-featured-image { margin: 18px 0 26px; }
-.post-featured-image img { display: block; width: 100%; max-height: 480px; object-fit: cover; border: 1px solid var(--ff-border); border-radius: 6px; }
-.post-image-placeholder { min-height: 220px; display: grid; place-items: center; padding: 24px; border: 1px dashed var(--ff-border); border-radius: 6px; color: var(--ff-muted); background: var(--ff-panel); text-align: center; }
-.post-content { line-height: 1.7; }
 
 /* neofetch home page */
 .ascii-art {
