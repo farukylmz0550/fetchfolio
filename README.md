@@ -6,7 +6,7 @@ removed.
 
 ## Install
 
-Download `fetchfolio-wordpress-theme-3.1.0.zip` from the GitHub Releases page.
+Download `fetchfolio-wordpress-theme-3.2.0.zip` from the GitHub Releases page.
 In WordPress, open **Appearance → Themes → Add New → Upload Theme**, select the
 ZIP, and install and activate **FetchFolio**. For a manual install, copy
 `wordpress-theme/fetchfolio` to `wp-content/themes/fetchfolio`.
@@ -17,12 +17,9 @@ those edits on later theme activations.
 
 ## Configure
 
-- **Appearance → Customize → FetchFolio terminal:** set the terminal user and
-  host, accent color, ASCII art, and profile links. Defaults are `fetch@folio`
-  and the included FetchFolio ASCII art.
-- **Appearance → Homepage Settings:** edit the short descriptions shown beside
-  homepage sections and change their order. The same controls are also in the
-  Customizer's **Homepage sections** panel.
+- **Appearance → Homepage Settings:** manage terminal identity, accent color,
+  ASCII art, built-in social profiles, up to eight custom links, and homepage
+  section descriptions and order from one screen.
 - **Pages** and **Posts:** edit the actual homepage-linked content and publish
   blog entries. Posts use `/blogs/<post-slug>` URLs.
 

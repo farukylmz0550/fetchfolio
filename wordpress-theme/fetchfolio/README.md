@@ -6,9 +6,10 @@ page in **Appearance → Themes → Add New**.
 
 On first activation, the theme creates editable placeholder pages and two
 sample posts. Edit page and post content in WordPress. Configure terminal
-identity, accent color, ASCII art, and profile links in
-**Appearance → Customize → FetchFolio terminal**. Homepage descriptions and
-section order are available under **Appearance → Homepage Settings**.
+identity, profile links, and homepage section descriptions and order together
+under **Appearance → Homepage Settings**. Add up to eight custom links with a
+name and URL; an icon image is optional. The built-in GitHub, YouTube,
+MakerWorld, LinkedIn, and Discord icons can also be configured there.
 
 The site defaults to dark mode and includes a light-mode toggle. Published
 pages and posts have `.md` companions; blog posts use `/blogs/<post-slug>` URLs.

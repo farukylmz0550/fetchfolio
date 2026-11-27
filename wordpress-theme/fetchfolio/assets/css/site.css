@@ -296,6 +296,8 @@ body.home .terminal-body {
 }
 .social-box:hover { transform: scale(1.3); border-color: var(--ff-accent); }
 .social-box img { width: 14px; height: 14px; }
+.social-box.custom-link { background: #334155; color: #fff; font-size: 12px; font-weight: 700; }
+.social-box.custom-link img { object-fit: contain; }
 .social-box.github     { background: #000000; }
 .social-box.youtube    { background: #ef4444; }
 .social-box.makerworld { background: #22c55e; }

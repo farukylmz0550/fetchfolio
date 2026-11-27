@@ -196,9 +196,9 @@ function fetchfolio_serve_markdown() {
 add_action('template_redirect', 'fetchfolio_serve_markdown', 0);
 
 function fetchfolio_assets() {
-    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.1.0');
-    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.1.0');
-    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.1.1', true);
+    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.2.0');
+    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.2.0');
+    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.2.0', true);
     $accent = sanitize_hex_color(get_theme_mod('fetchfolio_accent', '#38bdf8'));
     if ($accent) {
         wp_add_inline_style('fetchfolio-theme', ':root{--ff-user-accent:' . $accent . '}');
@@ -218,91 +218,6 @@ function fetchfolio_statistics_consent_provider($providers) {
     return $providers;
 }
 add_filter('wp_statistics_consent_api_compatible_plugins', 'fetchfolio_statistics_consent_provider');
-
-function fetchfolio_customizer($wp_customize) {
-    $wp_customize->add_section('fetchfolio_identity', array(
-        'title' => __('FetchFolio terminal', 'fetchfolio'),
-        'priority' => 30,
-    ));
-
-    $fields = array(
-        'fetchfolio_user' => array(__('Terminal user', 'fetchfolio'), 'fetch'),
-        'fetchfolio_host' => array(__('Terminal host', 'fetchfolio'), 'folio'),
-        'fetchfolio_accent' => array(__('Accent color', 'fetchfolio'), '#38bdf8'),
-        'fetchfolio_ascii' => array(__('ASCII art', 'fetchfolio'), ''),
-        'fetchfolio_github' => array(__('GitHub URL', 'fetchfolio'), ''),
-        'fetchfolio_youtube' => array(__('YouTube URL', 'fetchfolio'), ''),
-        'fetchfolio_makerworld' => array(__('MakerWorld URL', 'fetchfolio'), ''),
-        'fetchfolio_linkedin' => array(__('LinkedIn URL', 'fetchfolio'), ''),
-        'fetchfolio_discord' => array(__('Discord URL', 'fetchfolio'), ''),
-    );
-
-    foreach ($fields as $id => $field) {
-        $is_color = $id === 'fetchfolio_accent';
-        $is_textarea = $id === 'fetchfolio_ascii';
-        $is_url = in_array($id, array('fetchfolio_github', 'fetchfolio_youtube', 'fetchfolio_makerworld', 'fetchfolio_linkedin', 'fetchfolio_discord'), true);
-        $wp_customize->add_setting($id, array(
-            'default' => $field[1],
-            'sanitize_callback' => $is_color ? 'sanitize_hex_color' : ($is_url ? 'esc_url_raw' : ($is_textarea ? 'sanitize_textarea_field' : 'sanitize_text_field')),
-            'transport' => 'refresh',
-        ));
-        $wp_customize->add_control($id, array(
-            'section' => 'fetchfolio_identity',
-            'label' => $field[0],
-            'type' => $is_color ? 'color' : ($is_textarea ? 'textarea' : 'text'),
-        ));
-    }
-
-    $wp_customize->add_section('fetchfolio_home_sections', array(
-        'title' => __('Homepage sections', 'fetchfolio'),
-        'priority' => 31,
-        'description' => __('Set the short text shown after each section name and choose its position.', 'fetchfolio'),
-    ));
-    $labels = array(
-        'about' => __('About description', 'fetchfolio'),
-        'education' => __('Education description', 'fetchfolio'),
-        'achievements' => __('Achievements description', 'fetchfolio'),
-        'cv' => __('CV description', 'fetchfolio'),
-        'blog' => __('Blog description', 'fetchfolio'),
-        'contact' => __('Contact description', 'fetchfolio'),
-    );
-    foreach (fetchfolio_home_descriptions() as $slug => $default) {
-        $key = 'fetchfolio_home_' . $slug . '_description';
-        $wp_customize->add_setting($key, array(
-            'default' => $default,
-            'sanitize_callback' => 'sanitize_text_field',
-            'transport' => 'refresh',
-        ));
-        $wp_customize->add_control($key, array(
-            'section' => 'fetchfolio_home_sections',
-            'label' => $labels[$slug],
-            'type' => 'text',
-        ));
-    }
-    $position_labels = array(
-        'about' => __('About position', 'fetchfolio'),
-        'education' => __('Education position', 'fetchfolio'),
-        'achievements' => __('Achievements position', 'fetchfolio'),
-        'cv' => __('CV position', 'fetchfolio'),
-        'blog' => __('Blog position', 'fetchfolio'),
-        'contact' => __('Contact position', 'fetchfolio'),
-    );
-    foreach (fetchfolio_home_positions() as $slug => $default) {
-        $key = 'fetchfolio_home_' . $slug . '_position';
-        $wp_customize->add_setting($key, array(
-            'default' => $default,
-            'sanitize_callback' => 'absint',
-            'transport' => 'refresh',
-        ));
-        $wp_customize->add_control($key, array(
-            'section' => 'fetchfolio_home_sections',
-            'label' => $position_labels[$slug],
-            'type' => 'select',
-            'choices' => array_combine(range(1, 6), range(1, 6)),
-        ));
-    }
-}
-add_action('customize_register', 'fetchfolio_customizer');
 
 function fetchfolio_home_descriptions() {
     return array(
@@ -346,6 +261,19 @@ function fetchfolio_add_homepage_settings_page() {
 }
 add_action('admin_menu', 'fetchfolio_add_homepage_settings_page');
 
+function fetchfolio_homepage_settings_assets($hook) {
+    if ($hook !== 'appearance_page_fetchfolio-homepage-settings') return;
+    wp_enqueue_media();
+    wp_enqueue_script(
+        'fetchfolio-homepage-settings',
+        get_theme_file_uri('/assets/js/homepage-settings.js'),
+        array('jquery', 'media-editor'),
+        '3.2.0',
+        true
+    );
+}
+add_action('admin_enqueue_scripts', 'fetchfolio_homepage_settings_assets');
+
 function fetchfolio_render_homepage_settings_page() {
     if (!current_user_can('edit_theme_options')) return;
     $labels = array(
@@ -366,18 +294,59 @@ function fetchfolio_render_homepage_settings_page() {
     );
     $ascii_default = get_theme_mod('fetchfolio_ascii', '');
     if ($ascii_default === '') $ascii_default = (string) file_get_contents(get_theme_file_path('/assets/ascii-art.txt'));
+    $social_fields = array(
+        'github' => __('GitHub URL', 'fetchfolio'),
+        'youtube' => __('YouTube URL', 'fetchfolio'),
+        'makerworld' => __('MakerWorld URL', 'fetchfolio'),
+        'linkedin' => __('LinkedIn URL', 'fetchfolio'),
+        'discord' => __('Discord URL', 'fetchfolio'),
+    );
     ?>
     <div class="wrap">
       <h1><?php esc_html_e('Homepage Settings', 'fetchfolio'); ?></h1>
-      <p><?php esc_html_e('Edit the text and order shown on the homepage. These descriptions are independent of page content.', 'fetchfolio'); ?></p>
+      <p><?php esc_html_e('Manage the terminal identity, profile links, and homepage sections from this screen.', 'fetchfolio'); ?></p>
       <?php if (isset($_GET['updated'])) : ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Homepage settings saved.', 'fetchfolio'); ?></p></div><?php endif; ?>
       <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
         <input type="hidden" name="action" value="fetchfolio_save_homepage_settings">
         <?php wp_nonce_field('fetchfolio_homepage_settings'); ?>
+        <h2><?php esc_html_e('Terminal identity', 'fetchfolio'); ?></h2>
         <table class="form-table" role="presentation"><tbody>
           <tr><th scope="row"><label for="fetchfolio_user"><?php esc_html_e('Terminal user', 'fetchfolio'); ?></label></th><td><input class="regular-text" id="fetchfolio_user" name="fetchfolio_user" value="<?php echo esc_attr(get_theme_mod('fetchfolio_user', 'fetch')); ?>"></td></tr>
           <tr><th scope="row"><label for="fetchfolio_host"><?php esc_html_e('Terminal host', 'fetchfolio'); ?></label></th><td><input class="regular-text" id="fetchfolio_host" name="fetchfolio_host" value="<?php echo esc_attr(get_theme_mod('fetchfolio_host', 'folio')); ?>"></td></tr>
+          <tr><th scope="row"><label for="fetchfolio_accent"><?php esc_html_e('Accent color', 'fetchfolio'); ?></label></th><td><input type="color" id="fetchfolio_accent" name="fetchfolio_accent" value="<?php echo esc_attr(get_theme_mod('fetchfolio_accent', '#38bdf8')); ?>"></td></tr>
           <tr><th scope="row"><label for="fetchfolio_ascii"><?php esc_html_e('ASCII art', 'fetchfolio'); ?></label></th><td><textarea class="large-text code" rows="12" id="fetchfolio_ascii" name="fetchfolio_ascii"><?php echo esc_textarea($ascii_default); ?></textarea></td></tr>
+        </tbody></table>
+
+        <h2><?php esc_html_e('Social profiles', 'fetchfolio'); ?></h2>
+        <p><?php esc_html_e('Set the URL for the built-in profile icons. Leave a URL empty to hide that icon.', 'fetchfolio'); ?></p>
+        <table class="form-table" role="presentation"><tbody>
+          <?php foreach ($social_fields as $key => $label) : $setting = 'fetchfolio_' . $key; ?>
+            <tr><th scope="row"><label for="<?php echo esc_attr($setting); ?>"><?php echo esc_html($label); ?></label></th><td><input class="regular-text" type="url" id="<?php echo esc_attr($setting); ?>" name="<?php echo esc_attr($setting); ?>" value="<?php echo esc_attr(get_theme_mod($setting, '')); ?>"></td></tr>
+          <?php endforeach; ?>
+        </tbody></table>
+
+        <h2><?php esc_html_e('Custom links', 'fetchfolio'); ?></h2>
+        <p><?php esc_html_e('Add up to eight other links. Each needs a name and URL; an icon image is optional.', 'fetchfolio'); ?></p>
+        <table class="form-table" role="presentation"><tbody>
+          <?php for ($slot = 1; $slot <= 8; $slot++) : $label_key = 'fetchfolio_link_' . $slot . '_label'; $url_key = 'fetchfolio_link_' . $slot . '_url'; $icon_key = 'fetchfolio_link_' . $slot . '_icon'; $icon_url = get_theme_mod($icon_key, ''); ?>
+            <tr>
+              <th scope="row"><label for="<?php echo esc_attr($label_key); ?>"><?php printf(esc_html__('Link %d', 'fetchfolio'), $slot); ?></label></th>
+              <td>
+                <p><label for="<?php echo esc_attr($label_key); ?>"><?php esc_html_e('Name', 'fetchfolio'); ?></label><br><input class="regular-text" id="<?php echo esc_attr($label_key); ?>" name="<?php echo esc_attr($label_key); ?>" value="<?php echo esc_attr(get_theme_mod($label_key, '')); ?>"></p>
+                <p><label for="<?php echo esc_attr($url_key); ?>"><?php esc_html_e('URL', 'fetchfolio'); ?></label><br><input class="regular-text" type="url" id="<?php echo esc_attr($url_key); ?>" name="<?php echo esc_attr($url_key); ?>" value="<?php echo esc_attr(get_theme_mod($url_key, '')); ?>"></p>
+                <p><label for="<?php echo esc_attr($icon_key); ?>"><?php esc_html_e('Icon image URL', 'fetchfolio'); ?></label><br>
+                  <input class="regular-text fetchfolio-icon-url" type="url" id="<?php echo esc_attr($icon_key); ?>" name="<?php echo esc_attr($icon_key); ?>" value="<?php echo esc_attr($icon_url); ?>">
+                  <button type="button" class="button fetchfolio-select-icon"><?php esc_html_e('Choose image', 'fetchfolio'); ?></button>
+                  <?php if ($icon_url) : ?><img src="<?php echo esc_url($icon_url); ?>" alt="" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;margin-left:8px;"><?php endif; ?>
+                </p>
+              </td>
+            </tr>
+          <?php endfor; ?>
+        </tbody></table>
+
+        <h2><?php esc_html_e('Homepage sections', 'fetchfolio'); ?></h2>
+        <p><?php esc_html_e('Edit the short text shown beside each section and choose its position.', 'fetchfolio'); ?></p>
+        <table class="form-table" role="presentation"><tbody>
           <?php foreach (fetchfolio_home_descriptions() as $slug => $default) : $description_key = 'fetchfolio_home_' . $slug . '_description'; $position_key = 'fetchfolio_home_' . $slug . '_position'; ?>
             <tr><th scope="row"><label for="<?php echo esc_attr($description_key); ?>"><?php echo esc_html($labels[$slug]); ?></label></th><td><input class="regular-text" id="<?php echo esc_attr($description_key); ?>" name="<?php echo esc_attr($description_key); ?>" value="<?php echo esc_attr(get_theme_mod($description_key, $default)); ?>"></td></tr>
             <tr><th scope="row"><label for="<?php echo esc_attr($position_key); ?>"><?php echo esc_html($position_labels[$slug]); ?></label></th><td><select id="<?php echo esc_attr($position_key); ?>" name="<?php echo esc_attr($position_key); ?>"><?php for ($position = 1; $position <= 6; $position++) : ?><option value="<?php echo esc_attr($position); ?>" <?php selected((int) get_theme_mod($position_key, fetchfolio_home_positions()[$slug]), $position); ?>><?php echo esc_html($position); ?></option><?php endfor; ?></select></td></tr>
@@ -395,7 +364,16 @@ function fetchfolio_save_homepage_settings() {
     $input = wp_unslash($_POST);
     set_theme_mod('fetchfolio_user', sanitize_text_field($input['fetchfolio_user'] ?? 'fetch'));
     set_theme_mod('fetchfolio_host', sanitize_text_field($input['fetchfolio_host'] ?? 'folio'));
+    set_theme_mod('fetchfolio_accent', sanitize_hex_color($input['fetchfolio_accent'] ?? '') ?: '#38bdf8');
     set_theme_mod('fetchfolio_ascii', sanitize_textarea_field($input['fetchfolio_ascii'] ?? ''));
+    foreach (array('github', 'youtube', 'makerworld', 'linkedin', 'discord') as $key) {
+        set_theme_mod('fetchfolio_' . $key, esc_url_raw($input['fetchfolio_' . $key] ?? ''));
+    }
+    for ($slot = 1; $slot <= 8; $slot++) {
+        set_theme_mod('fetchfolio_link_' . $slot . '_label', sanitize_text_field($input['fetchfolio_link_' . $slot . '_label'] ?? ''));
+        set_theme_mod('fetchfolio_link_' . $slot . '_url', esc_url_raw($input['fetchfolio_link_' . $slot . '_url'] ?? ''));
+        set_theme_mod('fetchfolio_link_' . $slot . '_icon', esc_url_raw($input['fetchfolio_link_' . $slot . '_icon'] ?? ''));
+    }
     foreach (fetchfolio_home_descriptions() as $slug => $default) {
         $description_key = 'fetchfolio_home_' . $slug . '_description';
         $position_key = 'fetchfolio_home_' . $slug . '_position';
@@ -540,17 +518,33 @@ function fetchfolio_terminal_path() {
 
 function fetchfolio_social_links() {
     $links = array(
-        'github' => array('GitHub', 'github.svg', 'https://github.com'),
-        'youtube' => array('YouTube', 'youtube.svg', 'https://www.youtube.com'),
-        'makerworld' => array('MakerWorld', 'makerworld.svg', 'https://makerworld.com'),
-        'linkedin' => array('LinkedIn', 'linkedin.svg', 'https://www.linkedin.com'),
-        'discord' => array('Discord', 'discord.svg', 'https://discord.com'),
+        'github' => array('GitHub', 'github.svg'),
+        'youtube' => array('YouTube', 'youtube.svg'),
+        'makerworld' => array('MakerWorld', 'makerworld.svg'),
+        'linkedin' => array('LinkedIn', 'linkedin.svg'),
+        'discord' => array('Discord', 'discord.svg'),
     );
     foreach ($links as $key => $data) {
         $url = trim((string) get_theme_mod('fetchfolio_' . $key, ''));
-        if ($url && !preg_match('~^https?://~i', $url)) $url = 'https://' . $url;
-        $url = esc_url($url ?: $data[2]);
-        printf('<a class="social-box %1$s" href="%2$s" target="_blank" rel="noopener noreferrer" title="%3$s" aria-label="%3$s"><img src="%4$s" alt=""></a>', esc_attr($key === 'discord' ? 'purple' : $key), $url, esc_attr($data[0]), esc_url(get_theme_file_uri('/assets/icons/' . $data[1])));
+        if (!$url) continue;
+        if (!preg_match('~^https?://~i', $url)) $url = 'https://' . $url;
+        printf('<a class="social-box %1$s" href="%2$s" target="_blank" rel="noopener noreferrer" title="%3$s" aria-label="%3$s"><img src="%4$s" alt=""></a>', esc_attr($key === 'discord' ? 'purple' : $key), esc_url($url), esc_attr($data[0]), esc_url(get_theme_file_uri('/assets/icons/' . $data[1])));
+    }
+
+    for ($slot = 1; $slot <= 8; $slot++) {
+        $label = trim((string) get_theme_mod('fetchfolio_link_' . $slot . '_label', ''));
+        $url = trim((string) get_theme_mod('fetchfolio_link_' . $slot . '_url', ''));
+        if ($label === '' || $url === '') continue;
+        if (!preg_match('~^https?://~i', $url)) $url = 'https://' . $url;
+        $icon = trim((string) get_theme_mod('fetchfolio_link_' . $slot . '_icon', ''));
+        $class = sanitize_html_class(sanitize_title($label));
+        printf('<a class="social-box custom-link %1$s" href="%2$s" target="_blank" rel="noopener noreferrer" title="%3$s" aria-label="%3$s">', esc_attr($class), esc_url($url), esc_attr($label));
+        if ($icon) {
+            printf('<img src="%s" alt="">', esc_url($icon));
+        } else {
+            printf('<span aria-hidden="true">%s</span>', esc_html(wp_html_excerpt($label, 1, '')));
+        }
+        echo '</a>';
     }
 }
 
