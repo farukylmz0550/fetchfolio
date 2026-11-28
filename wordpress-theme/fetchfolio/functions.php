@@ -14,6 +14,22 @@ function fetchfolio_setup() {
 }
 add_action('after_setup_theme', 'fetchfolio_setup');
 
+/** Keep Polylang language management within FetchFolio's five-language limit. */
+function fetchfolio_limit_polylang_languages($term, $taxonomy) {
+    if ($taxonomy !== 'language' || is_wp_error($term)) return $term;
+
+    $languages = get_terms(array('taxonomy' => 'language', 'hide_empty' => false, 'fields' => 'ids'));
+    if (!is_wp_error($languages) && count($languages) >= 5) {
+        return new WP_Error(
+            'fetchfolio_language_limit',
+            __('FetchFolio supports up to five languages. Remove one before adding another.', 'fetchfolio')
+        );
+    }
+
+    return $term;
+}
+add_filter('pre_insert_term', 'fetchfolio_limit_polylang_languages', 10, 2);
+
 function fetchfolio_default_site_title() {
     if (in_array(get_option('blogname'), array('[Your Site Name]', 'WordPress'), true)) {
         update_option('blogname', 'FetchFolio');
@@ -31,6 +47,7 @@ add_action('after_setup_theme', 'fetchfolio_remove_default_site_description', 21
 /** Route public content's .md companion URL to a plain-text Markdown response. */
 function fetchfolio_markdown_rewrite() {
     add_rewrite_rule('^(.+)\\.md/?$', 'index.php?fetchfolio_markdown=$matches[1]', 'top');
+    add_rewrite_rule('^llms\\.txt/?$', 'index.php?fetchfolio_llms_txt=1', 'top');
     add_rewrite_rule('^ai\\.txt/?$', 'index.php?fetchfolio_ai_txt=1', 'top');
 }
 add_action('init', 'fetchfolio_markdown_rewrite');
@@ -81,6 +98,7 @@ add_action('wp_head', 'fetchfolio_markdown_alternate', 2);
 function fetchfolio_markdown_query_var($vars) {
     $vars[] = 'fetchfolio_markdown';
     $vars[] = 'fetchfolio_ai_txt';
+    $vars[] = 'fetchfolio_llms_txt';
     return $vars;
 }
 add_filter('query_vars', 'fetchfolio_markdown_query_var');
@@ -129,6 +147,83 @@ function fetchfolio_serve_ai_txt() {
 }
 add_action('template_redirect', 'fetchfolio_serve_ai_txt', 0);
 
+/** Publish translated Markdown URLs and the existing AI access policy at /llms.txt. */
+function fetchfolio_serve_llms_txt() {
+    if (!get_query_var('fetchfolio_llms_txt')) return;
+
+    status_header(200);
+    header('Content-Type: text/plain; charset=UTF-8');
+
+    $languages = function_exists('pll_languages_list')
+        ? pll_languages_list(array('hide_empty' => false, 'fields' => 'slug'))
+        : array();
+    $default_language = function_exists('pll_default_language')
+        ? pll_default_language('slug')
+        : '';
+
+    if (empty($languages)) {
+        $languages = array($default_language);
+    }
+
+    $pages = get_pages(array(
+        'post_status' => 'publish',
+        'sort_column' => 'menu_order,post_title',
+    ));
+    $posts = get_posts(array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ));
+    $content = array_merge($pages, $posts);
+    $lines = array(
+        '# FetchFolio',
+        'Language-indexed directory of public pages and posts. Markdown companions are provided for AI-friendly reading.',
+    );
+
+    foreach ($languages as $language) {
+        $language = sanitize_key($language);
+        $lines[] = '';
+        $lines[] = '## Language: ' . strtoupper($language) . ' (' . $language . ')';
+
+        foreach ($content as $item) {
+            if (in_array($item->post_name, array('home', 'blogs'), true)) continue;
+
+            $translated_id = $item->ID;
+            if (function_exists('pll_get_post')) {
+                $translated_id = pll_get_post($item->ID, $language);
+                if (!$translated_id && $language === $default_language) {
+                    $translated_id = $item->ID;
+                }
+            } elseif ($language !== $default_language) {
+                continue;
+            }
+
+            if (!$translated_id) continue;
+            $translated_post = get_post($translated_id);
+            if (!$translated_post || !is_post_publicly_viewable($translated_post)) continue;
+
+            $title = wp_strip_all_tags(html_entity_decode(get_the_title($translated_post), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            $markdown_url = untrailingslashit(get_permalink($translated_post)) . '.md';
+            $lines[] = '- [' . $title . '](' . esc_url_raw($markdown_url) . ')';
+        }
+    }
+
+    $lines[] = '';
+    $lines[] = '## AI access policy';
+    $lines[] = '- Allow public pages for search engines and AI assistants fetching content at a visitor’s request.';
+    $lines[] = '- Disallow automated collection, training, dataset creation, and bulk extraction.';
+    $lines[] = '- Disallow GPTBot, Google-Extended, ClaudeBot, anthropic-ai, PerplexityBot, Meta-ExternalAgent, Bytespider, CCBot, DeepSeekBot, GLM-Spider, QwenBot, Amazonbot, Applebot-Extended, cohere-ai, Diffbot, and ImagesiftBot.';
+    $lines[] = '- Allow visitor-requested access by ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, Perplexity-User, and Meta-ExternalFetcher.';
+    $lines[] = '- WordPress dashboard and login routes require an authorized account.';
+    $lines[] = '- See /robots.txt for crawler-specific rules.';
+
+    echo implode("\n", $lines) . "\n";
+    exit;
+}
+add_action('template_redirect', 'fetchfolio_serve_llms_txt', 0);
+
 function fetchfolio_html_to_markdown($html, $heading_offset = 0) {
     if (!class_exists('DOMDocument')) return trim(wp_strip_all_tags($html));
     $previous = libxml_use_internal_errors(true);
@@ -171,22 +266,46 @@ function fetchfolio_html_to_markdown($html, $heading_offset = 0) {
 function fetchfolio_serve_markdown() {
     $requested_path = get_query_var('fetchfolio_markdown');
     if (!$requested_path) return;
-    $requested_path = sanitize_text_field($requested_path);
+    $requested_path = trim(sanitize_text_field($requested_path), '/');
+
+    $language = '';
+    $languages = function_exists('pll_languages_list')
+        ? pll_languages_list(array('hide_empty' => false, 'fields' => 'slug'))
+        : array();
+    $path_segments = explode('/', $requested_path);
+    if (!empty($languages) && isset($path_segments[0]) && in_array($path_segments[0], $languages, true)) {
+        $language = array_shift($path_segments);
+        $requested_path = implode('/', $path_segments);
+    }
+
     if (strpos($requested_path, 'blogs/') === 0) {
         $post = get_page_by_path(substr($requested_path, 6), OBJECT, 'post');
     } else {
         $post = get_page_by_path($requested_path, OBJECT, array('page', 'post'));
     }
+
+    if ($post && $language && function_exists('pll_get_post')) {
+        $translated_id = pll_get_post($post->ID, $language);
+        $post = $translated_id ? get_post($translated_id) : null;
+    }
+
     if (!$post || $post->post_status !== 'publish' || !is_post_publicly_viewable($post)) {
         status_header(404);
         header('Content-Type: text/plain; charset=UTF-8');
-        echo "Not found\n";
+        echo esc_html__('Not found', 'fetchfolio') . "\n";
         exit;
     }
+
+    $canonical_post = $post;
+    if ($language && function_exists('pll_get_post')) {
+        $canonical_id = pll_get_post($post->ID, $language);
+        if ($canonical_id) $canonical_post = get_post($canonical_id);
+    }
+
     status_header(200);
     header('Content-Type: text/markdown; charset=UTF-8');
     header('X-Robots-Tag: noindex, follow');
-    header('Link: <' . esc_url_raw(get_permalink($post)) . '>; rel=canonical');
+    header('Link: <' . esc_url_raw(get_permalink($canonical_post)) . '>; rel=canonical');
     $body = apply_filters('the_content', $post->post_content);
     // The post title is the document H1. Keep body H2/H3 headings at their
     // authored levels and promote any body H1 to H2 under the document title.
@@ -196,9 +315,9 @@ function fetchfolio_serve_markdown() {
 add_action('template_redirect', 'fetchfolio_serve_markdown', 0);
 
 function fetchfolio_assets() {
-    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.2.0');
-    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.2.0');
-    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.2.0', true);
+    wp_enqueue_style('fetchfolio-site', get_theme_file_uri('/assets/css/site.css'), array(), '3.3.0');
+    wp_enqueue_style('fetchfolio-theme', get_stylesheet_uri(), array('fetchfolio-site'), '3.3.0');
+    wp_enqueue_script('fetchfolio-preferences', get_theme_file_uri('/assets/js/preferences.js'), array(), '3.3.0', true);
     $accent = sanitize_hex_color(get_theme_mod('fetchfolio_accent', '#38bdf8'));
     if ($accent) {
         wp_add_inline_style('fetchfolio-theme', ':root{--ff-user-accent:' . $accent . '}');
@@ -268,7 +387,7 @@ function fetchfolio_homepage_settings_assets($hook) {
         'fetchfolio-homepage-settings',
         get_theme_file_uri('/assets/js/homepage-settings.js'),
         array('jquery', 'media-editor'),
-        '3.2.0',
+        '3.3.0',
         true
     );
 }
@@ -457,7 +576,7 @@ function fetchfolio_import_starter_content() {
             if (empty($page_ids[$slug])) continue;
             $page = null;
             foreach ($data['pages'] as $candidate) if ($candidate['slug'] === $slug) $page = $candidate;
-            $menu_titles = array('about' => 'About', 'cv' => 'CV');
+            $menu_titles = array('about' => __('About', 'fetchfolio'), 'cv' => __('CV', 'fetchfolio'));
             wp_update_nav_menu_item($menu_id, 0, array(
                 'menu-item-title' => $menu_titles[$slug] ?? $page['title'], 'menu-item-object' => 'page',
                 'menu-item-object-id' => $page_ids[$slug], 'menu-item-type' => 'post_type',

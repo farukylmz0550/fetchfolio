@@ -15,7 +15,7 @@
         <?php foreach (get_pages(array('sort_column' => 'menu_order,post_title')) as $page) : ?>
           <a class="nav-row" href="<?php echo esc_url(get_permalink($page)); ?>"><span class="key"><?php echo esc_html(get_the_title($page)); ?>:</span><span class="value"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($page->post_content), 7, '…')); ?></span></a>
         <?php endforeach; ?>
-        <a class="nav-row" href="<?php echo esc_url(get_permalink(get_option('page_for_posts')) ?: home_url('/')); ?>"><span class="key">Blog:</span><span class="value"><?php esc_html_e('Notes, guides & updates', 'fetchfolio'); ?></span></a>
+        <a class="nav-row" href="<?php echo esc_url(get_permalink(get_option('page_for_posts')) ?: home_url('/')); ?>"><span class="key"><?php esc_html_e('Blog', 'fetchfolio'); ?>:</span><span class="value"><?php esc_html_e('Notes, guides & updates', 'fetchfolio'); ?></span></a>
       <?php endif; ?>
     </nav>
     <nav class="social-links" aria-label="<?php esc_attr_e('Profiles', 'fetchfolio'); ?>">

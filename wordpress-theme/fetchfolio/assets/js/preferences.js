@@ -26,10 +26,10 @@
     if (!button) return;
     var light = theme === 'light';
     button.setAttribute('aria-pressed', String(light));
-    button.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    button.setAttribute('aria-label', light ? button.dataset.ffDarkAria : button.dataset.ffLightAria);
     var label = button.querySelector('.theme-toggle-label');
     var icon = button.querySelector('[aria-hidden="true"]');
-    if (label) label.textContent = light ? 'Dark' : 'Light';
+    if (label) label.textContent = light ? button.dataset.ffDarkText : button.dataset.ffLightText;
     if (icon) icon.textContent = light ? '☾' : '☼';
     if (save) { try { localStorage.setItem(themeKey, theme); } catch (e) {} }
   }

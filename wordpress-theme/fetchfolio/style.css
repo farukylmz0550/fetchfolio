@@ -2,10 +2,52 @@
 Theme Name: FetchFolio
 Author: FetchFolio contributors
 Description: A terminal-inspired portfolio theme for WordPress.
-Version: 3.2.0
+Version: 3.3.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: fetchfolio
 */
+
+
+/* Terminal language switcher */
+.terminal-title { flex: 1 1 auto; min-width: 0; }
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--ff-user-accent, var(--ff-accent, #38bdf8));
+  font: inherit;
+  font-size: 11px;
+}
+.language-switcher-prompt,
+.language-switcher-separator { color: var(--ff-muted, #8b949e); }
+.language-switcher-link,
+.language-switcher-current {
+  display: inline-block;
+  padding: 2px 4px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--ff-user-accent, var(--ff-accent, #38bdf8));
+  text-decoration: none;
+}
+.language-switcher-current {
+  background: var(--ff-user-accent, var(--ff-accent, #38bdf8));
+  color: var(--ff-bg, #0c0c0d);
+  border-color: var(--ff-user-accent, var(--ff-accent, #38bdf8));
+  font-weight: 700;
+}
+.language-switcher-link:hover,
+.language-switcher-link:focus-visible {
+  background: var(--ff-panel, #17191c);
+  border-color: var(--ff-user-accent, var(--ff-accent, #38bdf8));
+  outline: none;
+}
+@media (max-width: 520px) {
+  .language-switcher { gap: 3px; font-size: 10px; }
+  .language-switcher-link,
+  .language-switcher-current { padding: 2px; }
+}

@@ -6,7 +6,7 @@ removed.
 
 ## Install
 
-Download `fetchfolio-wordpress-theme-3.2.0.zip` from the GitHub Releases page.
+Download `fetchfolio-wordpress-theme-3.3.0.zip` from the GitHub Releases page.
 In WordPress, open **Appearance → Themes → Add New → Upload Theme**, select the
 ZIP, and install and activate **FetchFolio**. For a manual install, copy
 `wordpress-theme/fetchfolio` to `wp-content/themes/fetchfolio`.
@@ -28,6 +28,15 @@ appears until a visitor selects an option, then remembers that choice in their
 browser. Statistics consent can integrate with the optional WP Consent API and
 WP Statistics plugins.
 
+## Multilingual
+
+Polylang is optional. When active, the theme provides a terminal-style language
+switcher, localized theme strings, language-aware `.md` URLs and `llms.txt`, and
+supports at most five configured languages. Configure Polylang under
+**Languages** with directory URLs; the theme does not require all five to remain
+active. The recommended set is Turkish, English, Mandarin Chinese, Hindi, and
+Spanish.
+
 ## Markdown and crawlers
 
 Published pages and posts have a Markdown companion at the same URL with
@@ -35,7 +44,9 @@ Published pages and posts have a Markdown companion at the same URL with
 links to its Markdown version, which is marked `noindex` to avoid duplicate
 search listings.
 
-The theme serves `/robots.txt` and `/ai.txt` policies. Search crawlers and
+The theme serves `/robots.txt`, `/ai.txt`, and a language-aware `/llms.txt`
+directory. If a physical `llms.txt` already exists in the WordPress root, remove
+it or route it to WordPress so the dynamic endpoint can run. Search crawlers and
 visitor-requested AI fetchers are allowed to read public content; automated
 training and bulk-collection crawlers are asked not to. These files express
 crawler preferences and cannot technically stop a bot that ignores them.

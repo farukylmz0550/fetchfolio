@@ -18,3 +18,8 @@ policies do not replace WordPress's login and permission checks.
 
 The theme is GPL-3.0-or-later. See **Licenses & Credits** for third-party
 attributions.
+
+Polylang is optional. When enabled, the theme shows active languages in a
+terminal-style switcher and supports up to five languages; administrators can keep
+one to five active. Configure directory-based language URLs in Polylang. Theme
+strings use the `fetchfolio` text domain and load catalogs from `languages/`.
